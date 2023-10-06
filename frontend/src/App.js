@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Signup from './Signup';
+import ForgotPassword from './ForgotPassword';
 
 function App() {
   return (
