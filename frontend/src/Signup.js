@@ -23,7 +23,11 @@ function Signup () {
                 alert('Success');
                 console.log('Success');
                 return res.json();
-            } else {
+            } else if (res.status === 400) {
+                alert('User already exists');
+                console.log('User already exists');
+            }
+            else {
                 alert('Failed');
                 alert(res.status);
                 console.log('Failed');
