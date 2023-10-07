@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 //import Home from './Home';
 import Signup from './Signup';
-import Login from './login';
+import Login from './Login';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -15,7 +15,7 @@ function App() {
           <Routes>
             {/* <Route path="/" element={<Home />}></Route> */}
             <Route path="/register" element={<Signup />}></Route>
-            <Route path="/login" element={<login />}></Route>
+            <Route path="/login" element={<Login />}></Route>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
             <Route path="/reset_password" element={<ResetPassword />}></Route> 
           </Routes>
