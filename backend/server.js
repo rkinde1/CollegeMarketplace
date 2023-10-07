@@ -15,6 +15,8 @@ app.listen(PORT, ()=> {
     console.log(`Server running on port ${PORT}`)
 });
 
+
+//Generates a token, then sends an email to the users email account
 app.post('/forgot-password', (req, res) => {
     const {email} = req.body;
     UserModel.findOne({email: email})
@@ -48,6 +50,8 @@ app.post('/forgot-password', (req, res) => {
     })
 })
 
+
+//the user is asked to create a new password which is sent back to the database
 app.post('/reset-password/:id/:token', (req, res) => {
     const {id, token} = req.params
     const {password} = req.body
