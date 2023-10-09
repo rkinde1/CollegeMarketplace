@@ -16,7 +16,7 @@ function App() {
       <Navbar>
         <Navbar.Brand href="/">Home</Navbar.Brand>
         <Nav>
-          <NavLink href="/register">Register</NavLink>
+          <NavLink href="/signup">Register</NavLink>
           <NavLink href="/login">Login</NavLink>
           <NavLink href="/forgot-password">Forgot Password</NavLink>
           <NavLink href="/reset_password">Reset Password</NavLink>
