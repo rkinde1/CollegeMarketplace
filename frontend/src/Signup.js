@@ -10,6 +10,9 @@ function Signup () {
     const handleSignup = async (e) => {
         e.preventDefault();
         //needs validation
+        if (email.charAt(0) !== firstName.charAt(0) || email.indexOf(lastName) === -1 || email.indexOf("students.towson.edu") ===-1) {
+            return res.status(409).send({message: "Not Towson Student, must use towson email"});
+        }
         //Insert Connor's function to verify email and password
         await fetch('/api/signup', {
             method: 'POST',
@@ -18,7 +21,7 @@ function Signup () {
             },
             body: JSON.stringify({ firstName, lastName, email, password }),
         })
-        .then((res) => {
+        .then((res) => { 
             if (res.status === 200) {
                 alert('Success');
                 console.log('Success');

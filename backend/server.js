@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const connection = require('./dbconnection');
+require('dotenv').config();
+const userRoutes = require('./routes/userRoute');
+const authRoutes = require("./routes/auth");
 
 connection();
 const PORT = 5000;
@@ -9,6 +12,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//routes
+app.use("/api/users", userRoutes);
+app.use("/api/authRoutes", authRoutes);
 app.use('/api/signup', require('./routes/userRoute'));
 
 app.listen(PORT, ()=> {

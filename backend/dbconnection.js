@@ -10,4 +10,15 @@ const connection = async () => {
     }
 }
 
-module.exports = connection;
+module.exports = ()=>{
+    const connectionParams = {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    };
+        try{
+            mongoose.connect(process.env.BASE_URL.connectionParams);
+            console.log("Connected to database successufully")
+        }catch(error){
+            console.log("could not connect to database");
+        }
+    }
