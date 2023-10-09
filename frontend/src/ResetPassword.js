@@ -22,8 +22,8 @@ function ResetPassword() {
     }
 
     return(
-        <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-      <div className="bg-white p-3 rounded w-25">
+        // <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
+      <div>
         <h4>Reset Password</h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -45,7 +45,7 @@ function ResetPassword() {
           </form>
         
       </div>
-    </div>
+    // </div>
     )
 }
 
