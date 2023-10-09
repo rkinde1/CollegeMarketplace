@@ -8,6 +8,7 @@ import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {Navbar, NavLink, Nav, Container} from 'react-bootstrap';
+import Logout from './logout';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <NavLink href="/forgot-password">Forgot Password</NavLink>
           <NavLink href="/reset_password">Reset Password</NavLink>
         </Nav>
+        <Logout/>
       </Navbar>
       <div className="App">
         <header className="App-header">
