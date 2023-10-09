@@ -1,24 +1,22 @@
 import React, {useEffect, useState} from "react"
 //import axios from "axios" //not axios (twice) need to be changed
-// import { useNavigate, Link} from "react-router-dom"
+import { useNavigate, Link} from "react-router-dom"
 
 function Login() {
 
     const[email,setEmail]=useState('')
     const[password,setPassword]=useState('')
 
-    async function submit(e){
+    const submit = async (e) => {
         e.preventDefault();
-
-        await fetch('/api/signup', {
-            method: 'GET',
+        await fetch('/api/login', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email, password }),
         })
         .then((res) => {
-            alert(res.status);
             if (res.status === 400) {
                 alert('User does not exist');
                 console.log('User does not exist');
@@ -44,16 +42,15 @@ function Login() {
     return(
         <div>
             <h1>Login</h1>
-            <form method="GET" onSubmit={submit}>
-                <input type = "email" onChange = {(e)=>{setEmail(e.target.value)}} placeholder = "Email" name = "email" id= "email"/>
-                <input type = "password" onChange = {(e)=>{setPassword(e.target.value)}} placeholder = "Password" name = "password" id= "password"/>
+            <form method="POST" onSubmit={submit}>
+                <input type = "email" onChange = {(e)=>{setEmail(e.target.value)}} placeholder = "Email" id= "email"/>
+                <input type = "password" onChange = {(e)=>{setPassword(e.target.value)}} placeholder = "Password" id= "password"/>
                 <button type="submit">Submit</button>
             </form>
             <br />
             <p>or</p>
             <br/>
-            {/*Once routing is done"*/}
-            {/* <Link to="/Signup">Signup Page</Link> */}
+            <Link to="/Signup">Signup Page</Link>
 
         </div>
         
