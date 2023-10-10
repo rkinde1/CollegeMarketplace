@@ -9,11 +9,10 @@ function Signup () {
 
     const handleSignup = (e) => {
         e.preventDefault();
-                //needs validation
-        if (email.charAt(0).toUpperCase() !== firstName.charAt(0).toUpperCase()){
-            alert("Must use Legal name");
-            return;
-        }
+        alert(email);
+        const split = email.split('@');
+        alert(split[1]);
+        //needs validation
         //Insert Connor's function to verify email and password
         if (!email || !password || !firstName || !lastName) {
             alert('Please fill out all fields');
@@ -21,7 +20,8 @@ function Signup () {
         }
         if (split[1] !== 'towson.edu' && split[1] !== 'students.towson.edu') {
             alert('Please use a Towson email');
-                        return;
+            // window.location.reload();
+            return;
         }
         fetch('/api/signup', {
             method: 'POST',
