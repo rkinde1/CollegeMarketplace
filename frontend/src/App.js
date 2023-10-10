@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-//import Home from './Home';
+import Home from './homepage';
 import 'bootstrap/dist/css/bootstrap.css';
 import Signup from './Signup';
 import Login from './login';
@@ -27,7 +27,7 @@ function App() {
         <header className="App-header">
           <Routes>
             {/* <Route path="/" element={<Home />}></Route> */}
-            <Route path="/" element={<Signup />}></Route>
+            <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>

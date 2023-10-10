@@ -6,22 +6,24 @@ function Signup () {
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName,setLastName] = useState('');
-    const [split, setSplit] = useState('');
 
-    const handleSignup = async (e) => {
+    const handleSignup = (e) => {
         e.preventDefault();
+        alert(email);
+        const split = email.split('@');
+        alert(split[1]);
         //needs validation
         //Insert Connor's function to verify email and password
         if (!email || !password || !firstName || !lastName) {
             alert('Please fill out all fields');
             return;
         }
-        setSplit(email.split('@'));
         if (split[1] !== 'towson.edu' && split[1] !== 'students.towson.edu') {
             alert('Please use a Towson email');
+            // window.location.reload();
             return;
         }
-        await fetch('/api/signup', {
+        fetch('/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
