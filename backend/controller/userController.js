@@ -18,9 +18,14 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    if (user) {
+        if (user.password === password) {
+            res.status(200).json({ message: 'Login successful' });
+        } else {
+            res.status(401).json({ message: 'Incorrect password' });
+        }
+    }
     if (!user) return res.status(400).json({ message: 'User does not exist' });
-    if (user.password !== password) return res.status(401).json({ message: 'Incorrect password' });
-    res.status(200).json({ message: 'Success' });
 }
 
 module.exports = { register, login };
