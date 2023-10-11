@@ -8,7 +8,9 @@ import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {Navbar, NavLink, Nav, Container} from 'react-bootstrap';
+import {AuthContext} from "./context/AuthContext";
 import Logout from './logout';
+import VerifyEmail from './VerifyEmail';
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path= "/verify-email" element ={<VerifyEmail />}/>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
             <Route path="/reset_password" element={<ResetPassword />}></Route> 
           </Routes>
