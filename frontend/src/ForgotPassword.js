@@ -1,52 +1,44 @@
-import React from 'react'
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
+const ForgotPassword = () => {
+  const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-function ForgotPassword() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const [email, setEmail] = useState()
-    const navigate = useNavigate()
+    try {
+      const response = await axios.post('/forgot-password', { email });
+      const resetPasswordLink = response.data.resetPasswordLink;
 
-    axios.defaults.withCredentials = true;
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.post('http://localhost:3001/forgot-password', {email})
-        .then(res => {
-            if(res.data.Status === "Success") {
-                navigate('/login')
-               
-            }
-        }).catch(err => console.log(err))
+      // Send the reset password link to the user's email
+      // ...
+
+      alert('Reset password link sent to your email');
+    } catch (error) {
+      setErrorMessage(error.message);
     }
+  };
 
-    return(
-    // <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-      <div>
-        <h4>Forgot Password</h4>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email">
-              <strong>Email</strong>
-            </label>
-            <input
-              type="email"
-              placeholder="Enter Email"
-              autoComplete="off"
-              name="email"
-              className="form-control rounded-0"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn btn-success w-100 rounded-0">
-            Send
-          </button>
-          </form>
-        
-      </div>
-    // </div>
-    )
-}
+  return (
+    <div>
+      <h1>Forgot Password</h1>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Enter your email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+    </div>
+  );
+};
 
 export default ForgotPassword;

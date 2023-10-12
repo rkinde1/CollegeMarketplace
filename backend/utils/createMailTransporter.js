@@ -5,7 +5,7 @@ const createMailTransporter = () => {
         service: "hotmail",
         auth:{
             user: "cbrown114@students.towson.edu",
-            pass: "HazelGirl2023!",
+            pass: "zdghdgna!",
         },
     });
 

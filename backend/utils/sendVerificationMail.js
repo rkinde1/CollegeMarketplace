@@ -1,7 +1,7 @@
-const {createMailTransponder} = require("./creatMailtransponder");
+//const {createMailTransponder} = require("./creatMailtransponder");
 
 const sendVerificationMail = (user) =>{
-    const transponder = createMailTransponder();
+    //const transponder = createMailTransponder();
 
     const mailOptions = {
         from: '"College Marketplace" <cbrown114@students.towson.edu',

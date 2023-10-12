@@ -1,52 +1,43 @@
-import React from 'react'
-import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
+const ResetPassword = () => {
+  const [newPassword, setNewPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-function ResetPassword() {
-    const [password, setPassword] = useState()
-    const navigate = useNavigate()
-    const {id, token} = useParams()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    axios.defaults.withCredentials = true;
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.post(`http://localhost:3001/reset-password/${id}/${token}`, {password})
-        .then(res => {
-            if(res.data.Status === "Success") {
-                navigate('/login')
-               
-            }
-        }).catch(err => console.log(err))
+    try {
+      await axios.post('/reset-password', { newPassword });
+
+      // Update the database with the user's new password
+      // ...
+
+      alert('Password reset successfully');
+    } catch (error) {
+      setErrorMessage(error.message);
     }
+  };
 
-    return(
-        // <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-      <div>
-        <h4>Reset Password</h4>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email">
-              <strong>New Password</strong>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              autoComplete="off"
-              name="password"
-              className="form-control rounded-0"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn btn-success w-100 rounded-0">
-            Update
-          </button>
-          </form>
-        
-      </div>
-    // </div>
-    )
-}
+  return (
+    <div>
+      <h1>Reset Password</h1>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          type="password"
+          placeholder="Enter your new password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+    </div>
+  );
+};
 
 export default ResetPassword;
