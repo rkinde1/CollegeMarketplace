@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
-    name: { type: String},
-    description: {type: String},
-    price: { type: Number},
+    itemName: { type: String},
+    itemDescription: {type: String},
+    itemPrice: { type: Number},
     // image: { type: String},
-    category: { type: String},
-    quantity: { type: Number},
+    itemCategory: { type: String},
+    itemQuantity: { type: Number},
     date: { type: Date, default: Date.now },
     sellerEmail: { type: String}
 })

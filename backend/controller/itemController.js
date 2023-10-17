@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Item = require('../models/itemModel');
 
 const createItem = async (req, res) => {
-    const { name, description, price, image, category, quantity, sellerEmail } = req.body;
+    const { itemName, itemDescription, itemPrice, itemCategory, itemQuantity, sellerEmail } = req.body;
     try {
-        const newItem = await Item.create({ name, description, price, image, category, quantity, sellerEmail });
+        const newItem = await Item.create({ itemName, itemDescription, itemPrice, itemCategory, itemQuantity, sellerEmail });
         await newItem.save();
         res.status(200).json({ message: 'Item created successfully' });
     } catch (error) {
@@ -23,5 +23,16 @@ const viewItem = async (req, res) => {
     }
 }
 
+const deleteItem = async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.id);
+        await item.remove();
+        res.status(200).json({ message: 'Item deleted successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error deleting item' });
+    }
 
-module.exports = { createItem,viewItem };
+}
+
+module.exports = { createItem, viewItem };

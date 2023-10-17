@@ -21,6 +21,7 @@ function CreateItem () {
         .then((res) => {
             if (res.status === 200) {
                 alert('Success');
+                window.location.reload();
                 console.log('Success');
                 return res.json();
             } else if (res.status === 400) {
