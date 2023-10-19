@@ -1,30 +1,44 @@
-import React, {sueEffect, useState, useContext} from 'react'
-import {UserContext} from '../..App'
-import {useParams} from 'react-router-dom'
+import React, {useEffect, useState} from "react"
+import { useNavigate, Link} from "react-router-dom"
+import Popup from "reactjs-popup";
 
-const Profile = () => {
-    const [userProfile, setProfile] = useState(null)
-    const {state, dispatch} = useContext(UserContext)
-    const {userid} = useParams()
+function Profile () {
+    //const userImg = localStorage.getItem('icon');
+    const [image, setImage] = useState("");
+    const [url, setUrl] = useState("");
 
-    useEffect(()=>{
-        fetch(`/user/${userid}`,{
-            headers:{
-                "Authorization": "Bearer " +localStorage.getItem("jwt")
-            }
-        }).then(res=>res.json())
-        .then(result=>{
-            //console.log(result)
+    const handleImageChange = (e) =>{
 
-            setProfile(result)
+        fetch('/api/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ image }),
         })
-    },[])
-
+        .then((res) => {
+            if (res.status === 200) {
+                alert('Success');
+                console.log('Success');
+                return res.json();
+            }
+            else {
+                alert('Failed');
+                alert(res.status);
+                console.log('Failed');
+            }
+        })
+    }
     return(
         <div>
-            <h1>User Profile</h1><br/>
+            {/* switch to users name */}
+            <h1>User's Profile</h1><br/>
+            <form onSubmit={handleImageChange} method="POST">
+                <h1>Enter Profile Picture</h1>
+                <input type="file" onChange={(e)=>setImage(e.target.files[0])} value = {image}/>
+            </form>
         </div>
     )
 }
 
-export default Profile
+export default Profile;

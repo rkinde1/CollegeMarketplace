@@ -28,4 +28,18 @@ const login = async (req, res) => {
     if (!user) return res.status(400).json({ message: 'User does not exist' });
 }
 
-module.exports = { register, login };
+const profile = async(req, res)=>{
+    const {email, userImage, defaultImage} = req.body;
+    const user = awaitUser.findOne({email});
+    if(user){
+        if(!userImage) {
+            res.status(200).json({ message: 'Uploading default image' });
+            return defaultImage;
+        }else{
+            res.status(200).json(user.email, user.firstName, { message: 'Uploading user image' });
+            return userImage;
+        }
+    }
+}
+
+module.exports = { register, login, profile };
