@@ -10,6 +10,10 @@ function Signup () {
 
     const handleSignup = (e) => {
         e.preventDefault();
+        const emailFirstChar = email.charAt(0);
+        const firstNameFirstChar = firstName.charAt(0);
+        const lastNameFirstFiveChars = lastName.slice(0, 5);
+        const emailChars2to6 = email.slice(1, 6);
         const split = email.split('@');
         //needs validation
         //Insert Connor's function to verify email and password
@@ -17,8 +21,8 @@ function Signup () {
             alert('Please fill out all fields');
             return;
         }
-        if (split[1] !== 'towson.edu' && split[1] !== 'students.towson.edu') {
-            alert('Please use a Towson email');
+        if (split[1] !== 'towson.edu' && split[1] !== 'students.towson.edu' && emailFirstChar === firstNameFirstChar && emailChars2to6 === lastNameFirstFiveChars) {
+            alert('Please use your Towson email');
             // window.location.reload();
             return;
         }

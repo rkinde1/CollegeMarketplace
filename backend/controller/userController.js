@@ -33,13 +33,15 @@ const profile = async(req, res)=>{
     const user = awaitUser.findOne({email});
     if(user){
         if(!userImage) {
-            res.status(200).json({ message: 'Uploading default image' });
-            return defaultImage;
+            res.status(200).json(user.email, user.firstName, user.lastName, user.image);
+            return
         }else{
-            res.status(200).json(user.email, user.firstName, { message: 'Uploading user image' });
-            return userImage;
+            user.defaultImage =userImage;
+            await user.save();
+            res.status(200).json(user.email, user.firstName, user.lastName, user.image);
+            return
         }
     }
 }
 
-module.exports = { register, login, profile };
+module.exports = { register, login, profile};
