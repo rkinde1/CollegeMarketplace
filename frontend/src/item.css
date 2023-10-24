@@ -1,0 +1,26 @@
+.item-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 5px; 
+    height: 100%;
+    width: 100%; 
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.item {
+    border: 1px solid rgb(255, 255, 255);
+    width: 300px; 
+    flex-wrap: wrap;
+    margin: 5px;
+    padding: 5px;
+    background-color: rgb(45, 169, 140);
+    border-radius: 10px;
+    /* box-shadow: 5px 5px 5px 5px rgb(118, 93, 93);    */
+}
+
+.userFont {
+    font-size: 10px;
+    padding: 0px 200px 0px 0px;
+}

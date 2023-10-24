@@ -11,6 +11,7 @@ app.use(express.json());
 
 app.use('/api/signup', require('./routes/userRoute'));
 app.use('/api/login', require('./routes/loginRoute'));
+app.use('/api/items', require('./routes/itemRoute'));
 
 //Generates a token, then sends an email to the users email account
 app.post('/forgot-password', (req, res) => {
