@@ -27,14 +27,22 @@ function Signup () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ firstName, lastName, email, password }),
+            body: JSON.stringify({ firstName, lastName, email, password}),
         })
         .then((res) => {
             if (res.status === 200) {
-                alert('Success');
-                console.log('Success');
+                alert('Success, being rerouted to verify email');
+                localStorage.setItem('email', email);
+                //Change here
+                fetch('/api/email/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email}),
+                })
+                .then(() => navigate('/verify'))
                 //could replace to auth
-                navigate('/login');
                 return res.json();
             } else if (res.status === 400) {
                 alert('User already exists');

@@ -53,6 +53,7 @@ function Login() {
             <p>or</p>
             <br/>
             <Link to="/Signup">Signup Page</Link>
+            <Link to="/ForgotPassword">Forgot Password</Link>
 
         </div>
         
