@@ -20,12 +20,11 @@ verify = async (req, res) => {
     const { email, otp} = req.body;
     try {
         const user = await User.findOne({ email: email });
-        if (otp === user.otp) {
+        if (otp == user.otp) {
             user.verified = true;
-            await user.save();
-            res.status(200).json({ message: 'User verified successfully' });
             user.updateOne({ otp: 0 });
             await user.save();
+            res.status(200).json({ message: 'User verified successfully' });
         }
         else {
             res.status(400).json({ message: 'Incorrect OTP' });

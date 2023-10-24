@@ -40,20 +40,21 @@ function OTPInput() {
             body: JSON.stringify({ email: email}),
         })
         .then((res) => {
-            alert(res.status);
+            if (res.status === 200) {
+                alert("OTP reset");
+                fetch('/api/email/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email}),
+                })
+                .then((res) => alert("Email has been sent"))
+                .catch ((error) => {
+                    alert(error);
+                })
+            }
         });
-
-        fetch('/api/email/send', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: email}),
-        })
-        .then((res) => alert(res.status))
-        .catch ((error) => {
-            alert(error);
-        })
     }
     return (
         <div>
