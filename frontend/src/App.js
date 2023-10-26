@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {Navbar, NavLink, Nav, Container} from 'react-bootstrap';
 import Logout from './logout';
 import Marketplace from './marketplace';
+import OTPInput from './OTPInput';
 
 function App() {
   return (
@@ -19,10 +20,9 @@ function App() {
         <Nav>
           <NavLink href="/signup">Register</NavLink>
           <NavLink href="/login">Login</NavLink>
-          <NavLink href="/forgot-password">Forgot Password</NavLink>
-          <NavLink href="/reset_password">Reset Password</NavLink>
           {/*needs authorization feature to be implemented*/}
           <NavLink href="/market">Marketplace</NavLink>
+
         </Nav>
         <Logout/>
       </Navbar>
@@ -37,6 +37,7 @@ function App() {
             <Route path="/reset_password" element={<ResetPassword />}></Route>
             {/*needs authorization feature to be implemented*/} 
             <Route path="/market" element={<Marketplace />}></Route>
+            <Route path="/verify" element={<OTPInput />}></Route>
           </Routes>
 
         </header>
