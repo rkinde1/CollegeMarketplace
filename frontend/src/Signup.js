@@ -7,6 +7,7 @@ function Signup () {
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName,setLastName] = useState('');
+    const [gradYear, setGradYear]=useState('');
 
     const handleSignup = (e) => {
         e.preventDefault();
@@ -63,6 +64,9 @@ function Signup () {
                 <br></br>
                 <label htmlFor="email">Email: </label>
                 <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                <br></br>
+                <label htmlFor="gradYear">Expected Graduation Year: </label>
+                <input type="text" id="gradYear" onChange={(e) => setGradYear(e.target.value)} value={gradYear} />
                 <br></br>
                 <label htmlFor="password">Password: </label>
                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} value={password} />

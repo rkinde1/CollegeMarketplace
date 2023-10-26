@@ -3,10 +3,10 @@ const User = require('../models/userModel');
 
 //error here
 const register = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, gradYear } = req.body;
     if (await User.findOne({email})) return res.status(400).json({ message: 'User already exists' });
     try {
-        const newUser = await User.create({ firstName, lastName, email, password });
+        const newUser = await User.create({ firstName, lastName, email, password,gradYear });
         await newUser.save();
         res.status(200).json({ message: 'User created successfully' });
     } catch (error) {
@@ -33,12 +33,12 @@ const profile = async(req, res)=>{
     const user = awaitUser.findOne({email});
     if(user){
         if(!userImage) {
-            res.status(200).json(user.email, user.firstName, user.lastName, user.image);
+            res.status(200).json(user.email, user.firstName, user.lastName,user.gradYear, user.bio, user.image);
             return
         }else{
             user.defaultImage =userImage;
             await user.save();
-            res.status(200).json(user.email, user.firstName, user.lastName, user.image);
+            res.status(200).json(user.email, user.firstName, user.lastName,user.gradYear, user.bio, user.image);
             return
         }
     }
