@@ -10,11 +10,20 @@ function Signup () {
 
     const handleSignup = (e) => {
         e.preventDefault();
+        const emailFirstChar = email.charAt(0);
+        const firstNameFirstChar = firstName.charAt(0);
+        const lastNameFirstChar = lastName.substring(0, 5);
+        const emailChars2to6 = email.substring(1, 6);
         const split = email.split('@');
         //needs validation
         //Insert Connor's function to verify email and password
         if (!email || !password || !firstName || !lastName) {
             alert('Please fill out all fields');
+            return;
+        }
+        if (emailFirstChar.toLowerCase !== firstNameFirstChar.toLowerCase && emailChars2to6.toLowerCase !== lastNameFirstChar.toLowerCase) {
+            window.location.reload()
+            alert("first name and last name don't match email");
             return;
         }
         if (split[1] !== 'towson.edu' && split[1] !== 'students.towson.edu') {

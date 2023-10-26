@@ -68,7 +68,7 @@ function OTPInput() {
             <p>or</p>
             <br/>
             <form onSubmit={handleResend}>
-                <input type="email" onChange={(e) => setEmail(e.target.value)}></input>
+                <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="email"></input>
                 <button type="submit">Resend OTP</button>
             </form>
         </div>

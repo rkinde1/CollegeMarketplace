@@ -5,8 +5,6 @@ import axios from 'axios'
 
 
 function ResetPassword() {
-
-
     const [password, setPassword] = useState()
     const navigate = useNavigate()
     const {id, token} = useParams()
@@ -14,7 +12,7 @@ function ResetPassword() {
     axios.defaults.withCredentials = true;
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post(`http://localhost:3001/reset-password/${id}/${token}`, {password})
+        axios.post(`/api/reset/reset-password/${id}/${token}`, {password})
         .then(res => {
             if(res.data.Status === "Success") {
                 navigate('/login')
@@ -24,7 +22,6 @@ function ResetPassword() {
     }
 
     return(
-        // <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
       <div>
         <h4>Reset Password</h4>
         <form onSubmit={handleSubmit}>
@@ -47,7 +44,6 @@ function ResetPassword() {
           </form>
         
       </div>
-    // </div>
     )
 }
 

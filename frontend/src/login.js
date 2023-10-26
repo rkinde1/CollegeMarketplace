@@ -17,6 +17,11 @@ function Login() {
             body: JSON.stringify({ email, password }),
         })
         .then((res) => {
+            if (res.status === 403) {
+                alert("User is not verified, redirecting to verification page");
+                navigate('/verify');
+                return res.json();
+            }
             if (res.status === 400) {
                 alert('User does not exist');
                 console.log('User does not exist');

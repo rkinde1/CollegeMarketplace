@@ -20,8 +20,6 @@ function App() {
         <Nav>
           <NavLink href="/signup">Register</NavLink>
           <NavLink href="/login">Login</NavLink>
-          <NavLink href="/forgot-password">Forgot Password</NavLink>
-          <NavLink href="/reset_password">Reset Password</NavLink>
           {/*needs authorization feature to be implemented*/}
           <NavLink href="/market">Marketplace</NavLink>
 

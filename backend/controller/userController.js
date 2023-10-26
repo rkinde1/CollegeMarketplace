@@ -20,7 +20,10 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-        if (user.password === password) {
+        if (user.verified === false) {
+            return res.status(403).json({ message: 'User not verified' })
+        }
+        else if (user.password === password) {
             res.status(200).json({ message: 'Login successful' });
         } else {
             res.status(401).json({ message: 'Incorrect password' });
