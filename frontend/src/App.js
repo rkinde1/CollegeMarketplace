@@ -9,6 +9,7 @@ import ResetPassword from './ResetPassword';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {Navbar, NavLink, Nav, Container} from 'react-bootstrap';
 import Logout from './logout';
+import Marketplace from './marketplace';
 import Progress from './progress';
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
           <NavLink href="/login">Login</NavLink>
           <NavLink href="/forgot-password">Forgot Password</NavLink>
           <NavLink href="/reset_password">Reset Password</NavLink>
+          {/*needs authorization feature to be implemented*/}
+          <NavLink href="/market">Marketplace</NavLink>
           <NavLink href="/progress">Progress</NavLink>
         </Nav>
         <Logout/>
@@ -33,6 +36,9 @@ function App() {
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+            <Route path="/reset_password" element={<ResetPassword />}></Route>
+            {/*needs authorization feature to be implemented*/} 
+            <Route path="/market" element={<Marketplace />}></Route>
             <Route path="/reset_password" element={<ResetPassword />}></Route>
             <Route path="/progress" element={<Progress />}></Route> 
           </Routes>

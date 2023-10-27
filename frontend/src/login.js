@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react"
 import { useNavigate, Link} from "react-router-dom"
 
 function Login() {
-
+    const navigate = useNavigate();
     const[email,setEmail]=useState('')
     const[password,setPassword]=useState('')
 
@@ -30,6 +30,8 @@ function Login() {
             else if (res.status === 200) {
                 alert('Success');
                 console.log('Success');
+                localStorage.setItem('email', email);
+                navigate('/market');
                 return res.json();
             }
             else {

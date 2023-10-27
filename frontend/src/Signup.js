@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Signup () {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -9,9 +10,7 @@ function Signup () {
 
     const handleSignup = (e) => {
         e.preventDefault();
-        alert(email);
         const split = email.split('@');
-        alert(split[1]);
         //needs validation
         //Insert Connor's function to verify email and password
         if (!email || !password || !firstName || !lastName) {
@@ -34,6 +33,8 @@ function Signup () {
             if (res.status === 200) {
                 alert('Success');
                 console.log('Success');
+                //could replace to auth
+                navigate('/login');
                 return res.json();
             } else if (res.status === 400) {
                 alert('User already exists');
