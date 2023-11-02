@@ -22,7 +22,6 @@ function App() {
           <NavLink href="/login">Login</NavLink>
           {/*needs authorization feature to be implemented*/}
           <NavLink href="/market">Marketplace</NavLink>
-
         </Nav>
         <Logout/>
       </Navbar>
@@ -34,10 +33,10 @@ function App() {
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-            <Route path="/reset_password" element={<ResetPassword />}></Route>
             {/*needs authorization feature to be implemented*/} 
             <Route path="/market" element={<Marketplace />}></Route>
             <Route path="/verify" element={<OTPInput />}></Route>
+            <Route path="/reset_password/:id/:token" element={<ResetPassword />}></Route>
           </Routes>
 
         </header>

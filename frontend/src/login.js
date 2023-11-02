@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react"
 //import axios from "axios" //not axios (twice) need to be changed
 import { useNavigate, Link} from "react-router-dom"
 
+
 function Login() {
     const navigate = useNavigate();
     const[email,setEmail]=useState('')
@@ -58,7 +59,8 @@ function Login() {
             <p>or</p>
             <br/>
             <Link to="/Signup">Signup Page</Link>
-            <Link to="/ForgotPassword">Forgot Password</Link>
+            <br/>
+            <Link to="/forgot-password">Forgot Password</Link>
 
         </div>
         
