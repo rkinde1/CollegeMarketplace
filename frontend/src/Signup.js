@@ -32,7 +32,7 @@ function Signup () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ firstName, lastName, email, password }),
+            body: JSON.stringify({ firstName, lastName, email, password, gradYear }),
         })
         .then((res) => {
             if (res.status === 200) {

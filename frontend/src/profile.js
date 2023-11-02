@@ -1,12 +1,42 @@
 import React, {useEffect, useState} from "react"
-import { useNavigate, Link} from "react-router-dom"
+import {Link} from "react-router-dom"
 import Popup from "reactjs-popup";
 import { Button } from 'react-bootstrap';
-import uploadImage from "./UploadImage"
+import UpdateProfile from "./UpdateProfile"
 
 
 function Profile () {
-    //const [comments, setComments] = useState([]);
+    const firstName =localStorage.getItem('firstName');
+    const icon = localStorage.getItem('defaultImage');
+    const lastName = localStorage.getItem('lastName');
+    const bio = localStorage.getItem('bio');
+    const gradYear = localStorage.getItem('gradYear');
+    const email = localStorage.getItem('email');
+    const [comments, setComments] = useState([]);
+    const [person, setPerson] = useState([]);
+
+    
+
+        fetch('/api/profile/profile',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email}),
+        })
+        .then((res)=>{
+            if(res.status===200){
+                console.log('success');
+                return res.json();
+            }else{
+                console.log("failed");
+            }
+        })
+        .then((data) => {
+            // alert(JSON.stringify(data));
+            setPerson(data);
+        });
+    
 
     // const handleComments = (e) => {
     //     fetch('/api/comments/view', {
@@ -28,24 +58,15 @@ function Profile () {
     //         setComments(data);
     //     })
     // }
+   
+   
 
-    //const userImg = localStorage.getItem('icon');
-    const navigate = useNavigate();
-    const [image, setImage] = useState("");
-    const [url, setUrl] = useState("");
-    const firstName =localStorage.getItem('firstName');
-    const imageLocation = localStorage.getItem('defaultImage');
 
     const divStyle = {
-        backgroundImage: `url('${imageLocation}')`,
+        backgroundImage: `url('${icon}')`,
         backgroundSize: 'cover',
         height: '480px',
         paddingTop: '80px',
-      };
-
-      const navigateToUploadImage = () => {
-        // 👇️ navigate to /UploadImage
-        navigate('/UploadImage');
       };
     
 
@@ -55,27 +76,27 @@ function Profile () {
     return(
         
         <div>
+            <h1>{firstName}</h1>
             {/* switch to users name and add rating */}
-            <h1> {firstName}  </h1><br/>
             <div style={divStyle}>
-                <img src={imageLocation} style={imgStyle} alt="Profile Picture Here" />
+                <img src={icon} style={imgStyle} alt="Profile Picture Here" />
             </div>
-            <button onClick={navigateToUploadImage}>Upload Profile Picture</button>
+            <Link to= '/profile-update' className='btn btn-primary'>Update Profile</Link>
+
+        </div>
                 
-             {/*<button onClick={handleComments}>View Comments</button>
+             /*<button onClick={handleComments}>View Comments</button>
             <div className="comment-list">
             {comments.map((comment) => (
                 <div className="comment" key={comment._id}>
                     <h2>{comment.commentName}</h2>
                     <p>{comment.commentTitle}</p>
                     <p>{comment.commentDescription}</p>
-                    <p>{comment.commentDate}</p>
                     <p>{comment.commentRating}</p>
                     <p className="userFont">{comment.date}</p>
                 </div>   
                 ))}
-            </div> */}
-        </div>
+            </div> */
     )
 }
 

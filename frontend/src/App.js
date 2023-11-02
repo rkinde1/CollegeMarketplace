@@ -11,8 +11,11 @@ import {Navbar, NavLink, Nav, Container} from 'react-bootstrap';
 import Logout from './logout';
 import Marketplace from './marketplace';
 import Profile from './profile';
+import UpdateProfile from './UpdateProfile';
 
 function App() {
+  const firstName =localStorage.getItem('firstName');
+
   return (
     <BrowserRouter forceRefresh={true}>
       <Navbar>
@@ -24,7 +27,7 @@ function App() {
           <NavLink href="/reset_password">Reset Password</NavLink>
           {/*needs authorization feature to be implemented*/}
           <NavLink href="/market">Marketplace</NavLink>
-          <NavLink href="/profile">Profile</NavLink>
+          <NavLink href="/profile">{firstName} Profile</NavLink>
         </Nav>
         <Logout/>
       </Navbar>
@@ -37,6 +40,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
             <Route path="/reset_password" element={<ResetPassword />}></Route>
+            <Route path='/profile-update' element={<UpdateProfile/>}></Route>
             {/*needs authorization feature to be implemented*/} 
             <Route path="/market" element={<Marketplace />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
