@@ -15,6 +15,7 @@ function Profile () {
     const [comments, setComments] = useState([]);
     const [person, setPerson] = useState([]);
 
+
     
 
         fetch('/api/profile/profile',{
@@ -73,6 +74,27 @@ function Profile () {
     const imgStyle = {
         height: '150px',
     }
+    const handleSubmit = (e) => {
+        fetch('/api/comments/view', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((res) => {
+            if (res.status === 200) {
+                console.log('Success');
+                return res.json();
+            } else {
+                console.log('Failed');
+            }
+        })
+        .then((data) => {
+            // alert(JSON.stringify(data));
+            setComments(data);
+        })
+    }
+
     return(
         
         <div>
@@ -83,7 +105,19 @@ function Profile () {
             </div>
             <Link to= '/profile-update' className='btn btn-primary'>Update Profile</Link>
 
+            <button onClick={handleSubmit}>View Comments</button>
+            <div className="comment-list">
+            {comments.map((comment) => (
+                <div className="item" key={comment._id}>
+                    <h2>{comment.commentDescription}</h2>
+                    <p1>{comment.date}</p1>
+                    <p className="userFont">{comment.posterEmail}</p>
+                </div>   
+                ))}
+            </div>
         </div>
+
+        
                 
              /*<button onClick={handleComments}>View Comments</button>
             <div className="comment-list">

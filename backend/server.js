@@ -13,6 +13,7 @@ app.use('/api/signup', require('./routes/userRoute'));
 app.use('/api/login', require('./routes/loginRoute'));
 app.use('/api/items', require('./routes/itemRoute'));
 app.use('/api/profile', require('./routes/profileRoute'));
+app.use('/api/comments', require('./routes/commentRoute'));
 
 
 
