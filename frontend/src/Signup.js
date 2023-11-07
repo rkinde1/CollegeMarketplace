@@ -7,6 +7,7 @@ function Signup () {
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName,setLastName] = useState('');
+    const [gradYear, setGradYear]=useState('');
 
     const handleSignup = (e) => {
         e.preventDefault();
@@ -16,7 +17,6 @@ function Signup () {
         const emailChars2to6 = email.substring(1, 6);
         const split = email.split('@');
         //needs validation
-        //Insert Connor's function to verify email and password
         if (!email || !password || !firstName || !lastName) {
             alert('Please fill out all fields');
             return;
@@ -36,7 +36,7 @@ function Signup () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ firstName, lastName, email, password}),
+            body: JSON.stringify({ firstName, lastName, email, password, gradYear }),
         })
         .then((res) => {
             if (res.status === 200) {
@@ -76,6 +76,9 @@ function Signup () {
                 <br></br>
                 <label htmlFor="email">Email: </label>
                 <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                <br></br>
+                <label htmlFor="gradYear">Expected Graduation Year: </label>
+                <input type="text" id="gradYear" onChange={(e) => setGradYear(e.target.value)} value={gradYear} />
                 <br></br>
                 <label htmlFor="password">Password: </label>
                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} value={password} />
