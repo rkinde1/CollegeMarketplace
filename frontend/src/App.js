@@ -19,7 +19,7 @@ function App() {
   return (
     <BrowserRouter forceRefresh={true}>
       <Navbar>
-        <Navbar.Brand href="/">Home</Navbar.Brand>
+        <Navbar.Brand style={{paddingLeft: "10px"}} href="/">Home</Navbar.Brand>
         <Nav>
           <NavLink href="/signup">Register</NavLink>
           <NavLink href="/login">Login</NavLink>
