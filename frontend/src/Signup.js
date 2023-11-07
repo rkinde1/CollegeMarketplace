@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Signup () {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName,setLastName] = useState('');
+    const [gradYear, setGradYear]=useState('');
 
     const handleSignup = (e) => {
         e.preventDefault();
-        alert(email);
+        const emailFirstChar = email.charAt(0);
+        const firstNameFirstChar = firstName.charAt(0);
+        const lastNameFirstChar = lastName.substring(0, 5);
+        const emailChars2to6 = email.substring(1, 6);
         const split = email.split('@');
-        alert(split[1]);
         //needs validation
-        //Insert Connor's function to verify email and password
         if (!email || !password || !firstName || !lastName) {
             alert('Please fill out all fields');
+            return;
+        }
+        if (emailFirstChar.toLowerCase !== firstNameFirstChar.toLowerCase && emailChars2to6.toLowerCase !== lastNameFirstChar.toLowerCase) {
+            window.location.reload()
+            alert("first name and last name don't match email");
             return;
         }
         if (split[1] !== 'towson.edu' && split[1] !== 'students.towson.edu') {
@@ -28,12 +36,22 @@ function Signup () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ firstName, lastName, email, password }),
+            body: JSON.stringify({ firstName, lastName, email, password, gradYear }),
         })
         .then((res) => {
             if (res.status === 200) {
-                alert('Success');
-                console.log('Success');
+                alert('Success, being rerouted to verify email');
+                localStorage.setItem('email', email);
+                //Change here
+                fetch('/api/email/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email}),
+                })
+                .then(() => navigate('/verify'))
+                //could replace to auth
                 return res.json();
             } else if (res.status === 400) {
                 alert('User already exists');
@@ -58,6 +76,9 @@ function Signup () {
                 <br></br>
                 <label htmlFor="email">Email: </label>
                 <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+                <br></br>
+                <label htmlFor="gradYear">Expected Graduation Year: </label>
+                <input type="text" id="gradYear" onChange={(e) => setGradYear(e.target.value)} value={gradYear} />
                 <br></br>
                 <label htmlFor="password">Password: </label>
                 <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} value={password} />

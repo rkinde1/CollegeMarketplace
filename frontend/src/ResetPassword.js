@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios'
 
-
 function ResetPassword() {
     const [password, setPassword] = useState()
     const navigate = useNavigate()
@@ -12,17 +11,16 @@ function ResetPassword() {
     axios.defaults.withCredentials = true;
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post(`http://localhost:3001/reset-password/${id}/${token}`, {password})
+        axios.post(`/api/reset/reset-password/${id}/${token}`, {password})
         .then(res => {
+          alert(res.data.message);
             if(res.data.Status === "Success") {
                 navigate('/login')
-               
             }
         }).catch(err => console.log(err))
     }
 
     return(
-        // <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
       <div>
         <h4>Reset Password</h4>
         <form onSubmit={handleSubmit}>
@@ -45,7 +43,6 @@ function ResetPassword() {
           </form>
         
       </div>
-    // </div>
     )
 }
 
