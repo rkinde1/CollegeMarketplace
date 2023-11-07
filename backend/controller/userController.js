@@ -8,8 +8,8 @@ const register = async (req, res) => {
     if (await User.findOne({email})) return res.status(400).json({ message: 'User already exists' });
     try {
         const newUser = await User.create({ firstName, lastName, email, password,gradYear });
-        newUser.defaultImage.url = "https://res.cloudinary.com/dt5nkkekl/image/upload/v1699319819/Profile/ocriia9h6i6wd3t94zdi.png";
-        newUser.defaultImage.public_id = 'Profile/ocriia9h6i6wd3t94zdi';
+        newUser.defaultImage = "https://res.cloudinary.com/dt5nkkekl/image/upload/v1699319819/Profile/ocriia9h6i6wd3t94zdi.png";
+        // newUser.defaultImage = 'Profile/ocriia9h6i6wd3t94zdi';
         await newUser.save();
         res.status(200).json({ message: 'User created successfully' });
     } catch (error) {
@@ -52,8 +52,8 @@ const uploadIcon = async (req, res) => {
 
         const user =await User.findOne({email});
 
-        user.defaultImage.public_id =  result.public_id;
-        user.defaultImage.url = result.secure_url;
+        //user.defaultImage.public_id =  result.public_id;
+        user.defaultImage = result.secure_url;
        
     }catch{
 
