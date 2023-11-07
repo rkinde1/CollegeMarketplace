@@ -4,7 +4,7 @@ function CreateItem () {
     const [itemName, setItemName] = useState('');
     const [itemDescription, setItemDescription] = useState('');
     const [itemPrice, setItemPrice] = useState('');
-    const [itemImage, setItemImage] = useState('');
+    const [sentItemImage, setSentItemImage] = useState('');
     const [itemCategory, setItemCategory] = useState('');
     const [itemQuantity, setItemQuantity] = useState('');
     const sellerEmail = localStorage.getItem('email');
@@ -16,7 +16,7 @@ function CreateItem () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ itemName, itemDescription, itemPrice, itemCategory, itemQuantity, sellerEmail, itemImage }),
+            body: JSON.stringify({ itemName, itemDescription, itemPrice, itemCategory, itemQuantity, sellerEmail, sentItemImage }),
         })
         .then((res) => {
             if (res.status === 200) {
@@ -34,6 +34,20 @@ function CreateItem () {
                 console.log('Failed');
             }
         })
+    }
+
+    const handleImage = (e) =>{
+        const file = e.target.files[0];
+        setFileToBase(file);
+        console.log(file);
+    }
+
+    const setFileToBase = (file) =>{
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () =>{
+            setSentItemImage(reader.result);
+        }
 
     }
 
@@ -44,7 +58,8 @@ function CreateItem () {
                 <input type="text" placeholder="Name" id="name" onChange={(e) => setItemName(e.target.value)} value={itemName}/>
                 <input type="text" placeholder="Description" id="description" onChange={(e) => setItemDescription(e.target.value)} value={itemDescription}/>
                 <input type="number" placeholder="Price" id="price" onChange={(e) => setItemPrice(e.target.value)} value={itemPrice}/>
-                <input type="file" alt="" placeholder="Image" id="image" onChange={(e)=>setItemImage(e.target.files[0])} value = {itemImage}/> 
+                <input  onChange={handleImage} type="file" id="formupload" name="image" className="form-control" />
+
                 {/*Change to radio buttons*/}
                 <input type="text" placeholder="Category" id="category" onChange={(e) => setItemCategory(e.target.value)} value={itemCategory}/>
                 <input type="number" placeholder="Quantity" id="quantity" onChange={(e) => setItemQuantity(e.target.value)} value={itemQuantity}/>

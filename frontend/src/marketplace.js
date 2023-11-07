@@ -36,6 +36,7 @@ function Marketplace () {
             <div className="item-list">
             {items.map((item) => (
                 <div className="item" key={item._id}>
+                    <img src={item.itemImage} style={{height: '200px',}}/>
                     <h2>{item.itemName}</h2>
                     <p>{item.itemDescription}</p>
                     <p>${item.itemPrice}</p>

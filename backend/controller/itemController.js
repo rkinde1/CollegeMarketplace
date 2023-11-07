@@ -4,15 +4,13 @@ const cloudinary = require('../utils/cloudinary')
 
 
 const createItem = async (req, res) => {
-    const { itemName, itemDescription, itemPrice, itemCategory, itemQuantity, sellerEmail, image } = req.body;
+    const { itemName, itemDescription, itemPrice, itemCategory, itemQuantity, sellerEmail, sentItemImage } = req.body;
     try {
-        const result = await cloudinary.uploader.upload(image,{
+        const result = await cloudinary.uploader.upload(sentItemImage,{
             folder: "items",
         })
-        const newItem = await Item.create({ itemName, itemDescription, itemPrice, itemCategory, itemQuantity, sellerEmail, image:{
-            public_id: result.public_id,
-            url: result.secure_url,
-        } });
+        const itemImage = result.secure_url;
+        const newItem = await Item.create({ itemName, itemDescription, itemPrice, itemCategory, itemQuantity, sellerEmail, itemImage});
         await newItem.save();
         res.status(200).json({ message: 'Item created successfully' });
     } catch (error) {
