@@ -73,7 +73,7 @@ function Profile () {
         <div>
             <h1>{person.firstName} {person.lastName} {person.gradYear }</h1>
             <div style={divStyle}>
-                <img src={person.defaultImage} style={imgStyle} alt="Profile Picture Here" />
+                <img src={person.defaultImage.url} style={imgStyle} alt="Profile Picture Here" />
             </div>
             <div>
                 {person.bio}
