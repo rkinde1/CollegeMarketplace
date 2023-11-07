@@ -42,6 +42,7 @@ function UpdateProfile (){
     }
 
     const handleBioSubmit = (e) => {
+        e.preventDefault();
         fetch('/api/profile/uploadBio',{
             method: 'POST',
             headers: {
@@ -50,11 +51,12 @@ function UpdateProfile (){
             body: JSON.stringify({email, bio}),
         })
         .then((res)=>{
+            alert(res.status);
             if(res.status===200){
-                console.log('success');
+                alert('success');
                 return res.json();
             }else{
-                console.log("failed");
+                alert(res.status);
             }
         })
     };   

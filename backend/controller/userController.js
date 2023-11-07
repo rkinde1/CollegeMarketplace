@@ -11,6 +11,7 @@ const register = async (req, res) => {
         newUser.defaultImage = "https://res.cloudinary.com/dt5nkkekl/image/upload/v1699319819/Profile/ocriia9h6i6wd3t94zdi.png";
         newUser.rating = 0;
         newUser.amountOfRatings = 0;
+        newUser.bio ="";
         await newUser.save();
         res.status(200).json({ message: 'User created successfully' });
     } catch (error) {
@@ -54,7 +55,8 @@ const uploadIcon = async (req, res) => {
         const user =await User.findOne({email});
 
         user.defaultImage = result.secure_url;
-       
+        await user.save();
+        res.status(200).json;
     }catch{
 
     }
@@ -64,9 +66,13 @@ const uploadBio = async (req, res) => {
     const { email, bio} = req.body;
     const user =await User.findOne({email});
     if(user){
+        console.log("User found");
         user.bio = bio;
+        await user.save();
+        res.status(200).json;
+        
     }
     else{return res.status(400).json({ message: 'upload failed' });}
 }
 
-module.exports = { register, login, profile, uploadIcon, uploadBio, };
+module.exports = { register, login, profile, uploadIcon, uploadBio};

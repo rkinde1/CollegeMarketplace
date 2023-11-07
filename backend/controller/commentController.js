@@ -9,6 +9,7 @@ const createComment = async (req, res) => {
         const user = await User.findOne({userFor});
         user.amountOfRatings++;
         user.rating = (user.rating + rating)/ user.amountOfRatings;
+        await user.save();
     }catch(error){
         console.log(error);
         res.status(500).json({ message: 'Error changing rating' });

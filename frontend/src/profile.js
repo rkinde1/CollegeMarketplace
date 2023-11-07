@@ -57,8 +57,6 @@ function Profile () {
    
 
     const divStyle = {
-        backgroundImage: `url('${person.defaultImage}')`,
-        backgroundSize: 'cover',
         height: '480px',
         paddingTop: '80px',
       };
@@ -69,7 +67,6 @@ function Profile () {
     }
 
     return(
-        
         <div>
             <h1> {person.firstName} {person.lastName} {person.gradYear }</h1>
             <h1>Rating: {person.rating}</h1>
@@ -77,7 +74,7 @@ function Profile () {
                 <img src={person.defaultImage} style={imgStyle} alt="Profile Picture Here" />
             </div>
             <div>
-                {person.bio}
+                <h1>{person.bio}</h1>
             </div>
             <Link to= '/profile-update' className='btn btn-primary'>Update Profile</Link>
             <div>
