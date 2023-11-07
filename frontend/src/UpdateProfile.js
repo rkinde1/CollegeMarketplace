@@ -9,12 +9,7 @@ function UpdateProfile (){
 
     const handleImageSubmit = async (e) => {
         e.preventDefault();
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () =>{
-            setUserImage(reader.result);
-        }
+
         fetch('/api/profile/uploadIcon',{
             method: 'POST',
             headers: {
@@ -30,11 +25,21 @@ function UpdateProfile (){
                 console.log("failed");
             }
         })
-        .then((data) => {
-            // alert(JSON.stringify(data));
-            setUserImage(data);
-        })
     };
+    const handleImage = (e) =>{
+        const file = e.target.files[0];
+        setFileToBase(file);
+        console.log(file);
+    }
+
+    const setFileToBase = (file) =>{
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () =>{
+            setUserImage(reader.result);
+        }
+
+    }
 
     const handleBioSubmit = (e) => {
         fetch('/api/profile/uploadBio',{
@@ -42,7 +47,7 @@ function UpdateProfile (){
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({bio, email}),
+            body: JSON.stringify({email, bio}),
         })
         .then((res)=>{
             if(res.status===200){
@@ -62,8 +67,8 @@ function UpdateProfile (){
             <form onSubmit={handleImageSubmit}>
                 <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="form4Example2">Profile Image:</label>
-                    <input  type="file" id="formupload" name="image" className="form-control" onChange={(e) => setUserImage(e.target.files[0])} />
-                <button type="submit">Update</button>
+                    <input  onChange={handleImage} type="file" id="formupload" name="image" className="form-control" />
+                    <button type="submit">Update</button>
                 </div>
             </form>
             <br></br>

@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
+const User = require('../models/userModel');
 const Comment = require('../models/commentModel');
 
 
 const createComment = async (req, res) => {
-    const { commentDescription, posterEmail, userFor} = req.body;
+    const { commentDescription, posterEmail, userFor, rating} = req.body;
+    try{
+        const user = await User.findOne({userFor});
+        user.amountOfRatings++;
+        user.rating = (user.rating + rating)/ user.amountOfRatings;
+    }catch(error){
+        console.log(error);
+        res.status(500).json({ message: 'Error changing rating' });
+    }
     try {
-      const newComment = await Comment.create({ commentDescription, posterEmail, userFor});
+      const newComment = await Comment.create({ commentDescription, posterEmail, userFor, rating});
         await newComment.save();
         res.status(200).json({ message: 'Comment created successfully' });
     } catch (error) {

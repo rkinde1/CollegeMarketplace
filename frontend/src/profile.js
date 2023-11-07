@@ -71,7 +71,8 @@ function Profile () {
     return(
         
         <div>
-            <h1>{person.firstName} {person.lastName} {person.gradYear }</h1>
+            <h1> {person.firstName} {person.lastName} {person.gradYear }</h1>
+            <h1>Rating: {person.rating}</h1>
             <div style={divStyle}>
                 <img src={person.defaultImage} style={imgStyle} alt="Profile Picture Here" />
             </div>
@@ -85,6 +86,7 @@ function Profile () {
                 {comments.map((comment) => (
                     <div className="comment" key={comment._id}>
                         <h2>{comment.commentDescription}</h2>
+                        <h2>{comment.rating}</h2>
                         <p1>{comment.date}</p1>
                         <p className="userFont">{comment.posterEmail}</p>
                     </div>   

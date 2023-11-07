@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema({
     defaultImage:{ type: String, required: false},
     bio:{type: String, required: false},
     gradYear:{type: String, required: true},
+    rating:{type: Number, required: false},
+    amountOfRatings:{type: Number, required: false},
 })
 
 module.exports = User = mongoose.model('user', userSchema);

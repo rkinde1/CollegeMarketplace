@@ -4,6 +4,7 @@ function CreateComment () {
     const [commentDescription, setCommentDescription] = useState('');
     const posterEmail = localStorage.getItem('email');
     const [userFor, setUserFor] = useState('');
+    const [rating, setRating] = useState('');
 
     const handleCreateComment = (e) => {
         e.preventDefault();
@@ -12,7 +13,7 @@ function CreateComment () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ commentDescription, posterEmail, userFor }),
+            body: JSON.stringify({ commentDescription, posterEmail, userFor, rating }),
         })
         .then((res) => {
             if (res.status === 200) {
@@ -39,6 +40,7 @@ function CreateComment () {
             <form onSubmit={handleCreateComment} method="POST">
                 <input type="text" placeholder="Description" id="description" onChange={(e) => setCommentDescription(e.target.value)} value={commentDescription}/>
                 <input type="text" placeholder="UserFor" id="userFor" onChange={(e)=> setUserFor(e.target.value)} value={userFor}/>
+                <input type="number" placeholder="Rating" id="rating" onChange={(e) => setRating(e.target.value)} value={rating}/>
                 <button type="submit">Submit</button>
             </form>
         </div>

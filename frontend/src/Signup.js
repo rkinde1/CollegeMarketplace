@@ -17,7 +17,6 @@ function Signup () {
         const emailChars2to6 = email.slice(1, 6);
         const split = email.split('@');
         //needs validation
-        //Insert Connor's function to verify email and password
         if (!email || !password || !firstName || !lastName) {
             alert('Please fill out all fields');
             return;
