@@ -14,7 +14,6 @@ import Profile from './profile';
 import UpdateProfile from './UpdateProfile';
 
 function App() {
-  const firstName =localStorage.getItem('firstName');
 
   return (
     <BrowserRouter forceRefresh={true}>
@@ -27,7 +26,7 @@ function App() {
           <NavLink href="/reset_password">Reset Password</NavLink>
           {/*needs authorization feature to be implemented*/}
           <NavLink href="/market">Marketplace</NavLink>
-          <NavLink href="/profile">{firstName} Profile</NavLink>
+          <NavLink href="/profile">Profile</NavLink>
         </Nav>
         <Logout/>
       </Navbar>

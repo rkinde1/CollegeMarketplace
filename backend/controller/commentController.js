@@ -3,9 +3,9 @@ const Comment = require('../models/commentModel');
 
 
 const createComment = async (req, res) => {
-    const { commentDescription, posterEmail} = req.body;
+    const { commentDescription, posterEmail, userFor} = req.body;
     try {
-      newComment = await Comment.create({ commentDescription, posterEmail});
+      const newComment = await Comment.create({ commentDescription, posterEmail, userFor});
         await newComment.save();
         res.status(200).json({ message: 'Comment created successfully' });
     } catch (error) {
@@ -15,8 +15,9 @@ const createComment = async (req, res) => {
 }
 
 const viewComment = async (req, res) => {
+    const {userFor} = req.body;
     try {
-        const comments = await Comment.find();
+        const comments = await Comment.findOne(userFor);
         res.status(200).json(comments);
     } catch (error) {
         console.log(error);

@@ -8,7 +8,8 @@ const register = async (req, res) => {
     if (await User.findOne({email})) return res.status(400).json({ message: 'User already exists' });
     try {
         const newUser = await User.create({ firstName, lastName, email, password,gradYear });
-        newUser.defaultImage.url = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.freepik.com%2Fpremium-vector%2Fgray-avatar-icon-vector-illustration_276184-163.jpg&tbnid=MYlyFWsXnNO1WM&vet=12ahUKEwjAjLnFtKOCAxV4BGIAHcRdCoMQMygCegQIARB3..i&imgrefurl=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fdefault-user&docid=X0pEsL5m10xz0M&w=626&h=626&q=default%20user%20image&ved=2ahUKEwjAjLnFtKOCAxV4BGIAHcRdCoMQMygCegQIARB3";
+        newUser.defaultImage.url = "https://res.cloudinary.com/dt5nkkekl/image/upload/v1699319819/Profile/ocriia9h6i6wd3t94zdi.png";
+        newUser.defaultImage.public_id = 'Profile/ocriia9h6i6wd3t94zdi';
         await newUser.save();
         res.status(200).json({ message: 'User created successfully' });
     } catch (error) {
@@ -42,7 +43,7 @@ const profile = async(req, res)=>{
 }
 
 const uploadIcon = async (req, res) => {
-    const { email, userImage} = req.body;
+    const {email, userImage} = req.body;
     try{
         const result = await cloudinary.uploader.upload(userImage, {
             folder: "profileIcon",
