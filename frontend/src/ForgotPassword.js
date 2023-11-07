@@ -1,31 +1,35 @@
 import React from 'react'
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios'
-
 
 function ForgotPassword() {
+    const [email, setEmail] = useState('')
 
-    const [email, setEmail] = useState()
-    const navigate = useNavigate()
-
-    axios.defaults.withCredentials = true;
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/forgot-password', {email})
-        .then(res => {
-            if(res.data.Status === "Success") {
-                navigate('/login')
-               
-            }
-        }).catch(err => console.log(err))
+        await fetch('/api/forgot-password/sendEmail', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            alert('Success');
+          } 
+          else if (res.status === 500) {
+            alert('Failed');
+            alert(res.status);
+          }
+          else {
+            alert(res.status);
+          }
+        })     
     }
-
     return(
-    // <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
       <div>
         <h4>Forgot Password</h4>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} method="POST">
           <div className="mb-3">
             <label htmlFor="email">
               <strong>Email</strong>
@@ -33,8 +37,7 @@ function ForgotPassword() {
             <input
               type="email"
               placeholder="Enter Email"
-              autoComplete="off"
-              name="email"
+              id="email"
               className="form-control rounded-0"
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -42,11 +45,9 @@ function ForgotPassword() {
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Send
           </button>
-          </form>
-        
+        </form>
       </div>
-    // </div>
     )
 }
 
-export default ForgotPassword;
+export default ForgotPassword

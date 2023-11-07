@@ -24,10 +24,7 @@ function CreateItem () {
                 window.location.reload();
                 console.log('Success');
                 return res.json();
-            } else if (res.status === 400) {
-                alert('Item already exists');
-                console.log('Item already exists');
-            }
+            } 
             else {
                 alert('Failed');
                 alert(res.status);

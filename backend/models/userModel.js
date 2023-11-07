@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema({
     gradYear:{type: String, required: true},
     rating:{type: Number, required: false},
     amountOfRatings:{type: Number, required: false},
+    otp: { type: String, required: true },
+    verified: { type: Boolean, required: true, default: false },
 })
 
 module.exports = User = mongoose.model('user', userSchema);

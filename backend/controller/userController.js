@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 const User = require('../models/userModel');
 const cloudinary = require('../utils/cloudinary');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 //error here
 const register = async (req, res) => {
     const { firstName, lastName, email, password, gradYear } = req.body;
+    const OTP = Math.floor(Math.random() * 1050394);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     if (await User.findOne({email})) return res.status(400).json({ message: 'User already exists' });
     try {
-        const newUser = await User.create({ firstName, lastName, email, password,gradYear });
+        const newUser = await User.create({ firstName, lastName, email, gradYear, password: hashedPassword, otp: OTP, verified: false  });
         newUser.defaultImage = "https://res.cloudinary.com/dt5nkkekl/image/upload/v1699319819/Profile/ocriia9h6i6wd3t94zdi.png";
         newUser.rating = 0;
         newUser.amountOfRatings = 0;
@@ -24,7 +29,10 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-        if (user.password === password) {
+        if (user.verified === false) {
+            return res.status(403).json({ message: 'User not verified' })
+        }
+        else if (await bcrypt.compare(password, user.password)) {
             res.status(200).json({ message: 'Login successful' });
         } else {
             res.status(401).json({ message: 'Incorrect password' });

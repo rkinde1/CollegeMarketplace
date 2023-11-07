@@ -13,16 +13,21 @@ function Signup () {
         e.preventDefault();
         const emailFirstChar = email.charAt(0);
         const firstNameFirstChar = firstName.charAt(0);
-        const lastNameFirstFiveChars = lastName.slice(0, 5);
-        const emailChars2to6 = email.slice(1, 6);
+        const lastNameFirstChar = lastName.substring(0, 5);
+        const emailChars2to6 = email.substring(1, 6);
         const split = email.split('@');
         //needs validation
         if (!email || !password || !firstName || !lastName) {
             alert('Please fill out all fields');
             return;
         }
-        if (split[1] !== 'towson.edu' && split[1] !== 'students.towson.edu' && emailFirstChar === firstNameFirstChar && emailChars2to6 === lastNameFirstFiveChars) {
-            alert('Please use your Towson email');
+        if (emailFirstChar.toLowerCase !== firstNameFirstChar.toLowerCase && emailChars2to6.toLowerCase !== lastNameFirstChar.toLowerCase) {
+            window.location.reload()
+            alert("first name and last name don't match email");
+            return;
+        }
+        if (split[1] !== 'towson.edu' && split[1] !== 'students.towson.edu') {
+            alert('Please use a Towson email');
             // window.location.reload();
             return;
         }
@@ -35,10 +40,18 @@ function Signup () {
         })
         .then((res) => {
             if (res.status === 200) {
-                alert('Success');
-                console.log('Success');
+                alert('Success, being rerouted to verify email');
+                localStorage.setItem('email', email);
+                //Change here
+                fetch('/api/email/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email}),
+                })
+                .then(() => navigate('/verify'))
                 //could replace to auth
-                navigate('/login');
                 return res.json();
             } else if (res.status === 400) {
                 alert('User already exists');
