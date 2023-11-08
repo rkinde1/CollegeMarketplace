@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import axios from 'axios';
+import {Link} from "react-router-dom"
 
 
 function UpdateProfile (){
@@ -18,11 +19,11 @@ function UpdateProfile (){
             body: JSON.stringify({userImage, email}),
         })
         .then((res)=>{
-            if(res.status===200){
-                console.log('success');
+            if(res.status === 200){
+                alert("Image uploaded");
                 return res.json();
             }else{
-                console.log("failed");
+                alert("failed");
             }
         })
     };
@@ -51,9 +52,8 @@ function UpdateProfile (){
             body: JSON.stringify({email, bio}),
         })
         .then((res)=>{
-            alert(res.status);
             if(res.status===200){
-                alert('success');
+                alert("Bio uploaded");
                 return res.json();
             }else{
                 alert(res.status);
@@ -79,6 +79,8 @@ function UpdateProfile (){
                 <input type="text" id="bio" onChange={(e) => setBio(e.target.value)} value={bio} />
                 <button type="submit">Update</button>
             </form>
+            <br></br>
+            <p>Return to profile</p><Link to="/profile">Profile</Link>
         </div>
     )
 }

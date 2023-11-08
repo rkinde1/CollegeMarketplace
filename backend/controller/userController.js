@@ -64,7 +64,7 @@ const uploadIcon = async (req, res) => {
 
         user.defaultImage = result.secure_url;
         await user.save();
-        res.status(200).json;
+        res.status(200).json({ message: 'upload successful' });
     }catch{
 
     }
@@ -77,7 +77,7 @@ const uploadBio = async (req, res) => {
         console.log("User found");
         user.bio = bio;
         await user.save();
-        res.status(200).json;
+        res.status(200).json({ message: 'upload successful' });
         
     }
     else{return res.status(400).json({ message: 'upload failed' });}
