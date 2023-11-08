@@ -41,4 +41,4 @@ const deleteItem = async (req, res) => {
 
 }
 
-module.exports = { createItem, viewItem };
+module.exports = { createItem, viewItem, deleteItem };

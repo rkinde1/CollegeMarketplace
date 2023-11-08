@@ -4,7 +4,7 @@ const { createItem, viewItem, deleteItem, editItem} = require('../controller/ite
 
 router.route('/create').post(createItem);
 router.route('/view').get(viewItem);
-// router.route('/delete').delete(deleteItem);
+router.route('/delete').delete(deleteItem);
 // router.route('/edit').put(editItem);
 
 module.exports = router;

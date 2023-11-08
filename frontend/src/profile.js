@@ -11,6 +11,9 @@ function Profile () {
     const [person, setPerson] = useState([]);
     const forUser = email;
 
+    //authorization token
+    const token = localStorage.getItem("token");   
+
         fetch('/api/profile/profile',{
             method: 'POST',
             headers: {

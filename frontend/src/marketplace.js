@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState} from "react";
 //import axios from "axios" //not axios (twice) need to be changed
-import { useNavigate, Link} from "react-router-dom"
+import { useNavigate, Link} from "react-router-dom";
 import Popup from "reactjs-popup";
-import CreateItem from "./createItem"
+import CreateItem from "./createItem";
 import "./item.css";
+
+const token = localStorage.getItem("token");
 
 function Marketplace () {
     //Use effect to call view items here
@@ -29,6 +31,22 @@ function Marketplace () {
             setItems(data);
         })
     }
+
+    const handleDelete = (e) => {
+        
+        fetch('/api/items/delete' + items._id, {
+            method: "DELETE", 
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((res) => {
+
+
+        })
+
+    }
+
     return (
         <div>
             <h1>Marketplace</h1>
@@ -43,6 +61,7 @@ function Marketplace () {
                     <p>{item.itemCategory}</p>
                     <p>{item.itemQuantity}</p>
                     <p className="userFont">{item.sellerEmail}</p>
+                    <button onClick={handleDelete}>Delete Item</button>                      
                 </div>   
                 ))}
             </div>

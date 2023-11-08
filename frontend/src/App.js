@@ -13,6 +13,7 @@ import Marketplace from './marketplace';
 import Profile from './profile';
 import UpdateProfile from './UpdateProfile';
 import OTPInput from './OTPInput';
+import PrivateRoutes from './privateRoutes';
 
 function App() {
 
@@ -34,19 +35,22 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Routes>
-            {/* <Route path="/" element={<Home />}></Route> */}
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
             <Route path='/profile-update' element={<UpdateProfile/>}></Route>
-            {/*needs authorization feature to be implemented*/} 
-            <Route path="/market" element={<Marketplace />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-            {/*needs authorization feature to be implemented*/} 
-            <Route path="/market" element={<Marketplace />}></Route>
-            <Route path="/verify" element={<OTPInput />}></Route>
             <Route path="/reset_password/:id/:token" element={<ResetPassword />}></Route>
+            <Route path="/verify" element={<OTPInput />}></Route>
+
+            {/*restricted pages*/}
+            <Route element={<PrivateRoutes />}>
+              {/*needs authorization feature to be implemented*/}
+              <Route path="/market" element={<Marketplace />}></Route>
+              <Route path="/profile" element={<Profile />}></Route>
+              {/*<Route path="/reset_password/:id/:token" element={<ResetPassword />}></Route>*/}
+            </Route>
+            
           </Routes>
         </header>
       </div>
