@@ -14,7 +14,7 @@ function ResetPassword() {
         axios.post(`/api/reset/reset-password/${id}/${token}`, {password})
         .then(res => {
           alert(res.data.message);
-            if(res.data.Status === "Success") {
+            if(res.status == 200) {
                 navigate('/login')
             }
         }).catch(err => console.log(err))

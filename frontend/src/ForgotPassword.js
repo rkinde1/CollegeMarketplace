@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState } from "react";
+import {useNavigate} from 'react-router-dom'
 
 function ForgotPassword() {
     const [email, setEmail] = useState('')
+    const navigate = useNavigate()
 
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -16,6 +18,7 @@ function ForgotPassword() {
         .then((res) => {
           if (res.status === 200) {
             alert('Success');
+            navigate('/login')
           } 
           else if (res.status === 500) {
             alert('Failed');
