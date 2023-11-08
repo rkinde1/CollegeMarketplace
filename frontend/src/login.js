@@ -41,10 +41,8 @@ function Login() {
                 //this guy is now an authorized user
 
                 localStorage.setItem("authorized", true);
-                //alerts that it works
-                alert("Successful");
-
                 navigate('/market');
+                window.location.reload();
                 return res.json();
             }
             else {
