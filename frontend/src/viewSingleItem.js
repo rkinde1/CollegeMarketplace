@@ -18,7 +18,8 @@ function ViewSingleItem() {
         .catch(err => console.log(err))
     }, [id])
 
-    const deleteRequest = async () => {
+    const deleteRequest = async (e) => {
+        e.preventDefault();
         await fetch(`/api/items/delete/${id}`, {
             method: 'DELETE',
             headers: {
@@ -28,7 +29,7 @@ function ViewSingleItem() {
         .then((res) => {
             if (res.status === 200) {
                 alert('Success');
-                return res.json();
+                navigate('/market');
             }
             else {
                 alert(res.status);
@@ -47,8 +48,14 @@ function ViewSingleItem() {
                 <h1>${item.itemPrice}</h1>
                 <h1>Quantity: {item.itemQuantity}</h1>
                 <h1>seller: {item.sellerEmail}</h1>
-                <form method="DELETE" action="/api/items/delete/:id">
-                    <button onClick={() => deleteRequest()} style={{backgroundColor: "red"}}>Delete Item</button>
+                <form method="DELETE" onSubmit={deleteRequest}>
+                    <button type="submit" style={{backgroundColor: "red", float: "center"}}>Delete Item</button>
+                </form>
+                <form>
+                    <button style={{float: "right", background: "green"}}>Initiate Transaction</button>
+                </form>
+                <form>
+                    <button style={{float: "left", background: "blue"}}>Message</button>
                 </form>
             </div>
         </div>
