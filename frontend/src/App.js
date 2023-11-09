@@ -15,6 +15,8 @@ import UpdateProfile from './UpdateProfile';
 import OTPInput from './OTPInput';
 import PrivateRoutes from './privateRoutes';
 import ViewSingleItem from './viewSingleItem';
+import Progress from './progress';
+import ChatBox2 from './ChatBox2';
 
 function App() {
   const PrivateRoutes = () => {
@@ -23,6 +25,8 @@ function App() {
         <Nav>
           <NavLink href="/market">Marketplace</NavLink>
           <NavLink href="/profile">Profile</NavLink>
+          <NavLink href="/progress">Progress</NavLink>
+          <NavLink href="/ChatBox2">ChatBox</NavLink>
           <Logout/>
         </Nav>
       )
@@ -45,6 +49,8 @@ function App() {
         <Route path="/market" element={<Marketplace />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
+        <Route path="/progress" element={<Progress />}></Route> 
+        <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
       </Route>
       )
     } else {
