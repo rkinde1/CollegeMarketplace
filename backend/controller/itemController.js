@@ -29,6 +29,16 @@ const viewItem = async (req, res) => {
     }
 }
 
+const viewSingleItem = async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.id);
+        res.status(200).json(item);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error viewing item' });
+    }
+}
+
 const deleteItem = async (req, res) => {
     try {
         const item = await Item.findById(req.params.id);
@@ -41,4 +51,4 @@ const deleteItem = async (req, res) => {
 
 }
 
-module.exports = { createItem, viewItem, deleteItem };
+module.exports = { createItem, viewItem, deleteItem, viewSingleItem };

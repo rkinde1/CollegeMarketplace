@@ -14,6 +14,7 @@ import Profile from './profile';
 import UpdateProfile from './UpdateProfile';
 import OTPInput from './OTPInput';
 import PrivateRoutes from './privateRoutes';
+import ViewSingleItem from './viewSingleItem';
 
 function App() {
   const PrivateRoutes = () => {
@@ -43,6 +44,7 @@ function App() {
       <Route>
         <Route path="/market" element={<Marketplace />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
       </Route>
       )
     } else {
