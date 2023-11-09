@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/StepLabel';
 import basicButton from './basicButton';
+import Box from '@mui/material/Box';
 /*may need to import trade page*/
-const steps = ['Step 1', 'Step2']/*array/list of all steps*/
-const stepDescription = ['Description 1', 'Description 2']
+const steps = ['Accept', 'In progress', 'Completed']/*array/list of all steps*/
+const stepDescription = ['Accept transaction', 'Transaction in progress', 'Transaction completed']
 
 const Progress = () => {
     const[activeStep, setActiveStep] = useState(0);/*stepper can communicate with usestate */
@@ -36,7 +37,7 @@ const Progress = () => {
     };
     
     return(
-        <div>
+        <Box sx={{width:'50%'}}> {/*width of stepper bar */}
             <Stepper activeStep={activeStep}>
                 {steps.map((step, index)=>(
                     <Step 
@@ -50,44 +51,61 @@ const Progress = () => {
             <div> 
                 {allStepsCompleted ?(
                     <>
-                    <Typography>All Steps Completed</Typography>
-                    <basicButton
-                        variant="contained"
-                        onClick= {handleReset}
+                    <Typography
+                        sx={{mt: 2, mb:1}}
+                    >All Steps Completed
+                    </Typography>
+                    <Box
+                        sx={{display:'flex', flexDirection:'row', pt:2}}
                     >
-                        Reset
-                    </basicButton>
+                        <Box sx={{flex:'1 1 auto'}}/>
+                    
+                        <basicButton
+                                variant="contained"
+                                onClick= {handleReset}
+                            >
+                                Reset
+                            </basicButton>
+                        </Box>
                     </>
                 ):  
                 (
                     <>
-                        <Typography>
+                        <Typography
+                            sx= {{mt:2, mb:1}}
+                        >
                             {stepDescription[activeStep]}{/*step description changes with step*/}
                         </Typography>
-                        
+                        <Box
+                            sx={{display: 'flex', flexDirection:'row', pt:2}}
+                        >
                         <basicButton 
                             onClick= {handleBack}
                             variant= "contained"
                             disabled={activeStep === 0}/*back button cannot be clicked when at step 1*/ 
+                            sx ={{mr:1}}
                         >
                             Back
                         </basicButton>
-                        <basicButton 
+                        <Box sx={{flex: '1 1 auto'}}/>
+                        {/*<basicButton 
                             onClick= {handleNext}
                             variant= "contained"
+                            color= "blue"
                         >
-                            Next
-                        </basicButton>
+                            Accept
+                        </basicButton>*/}
                         <basicButton //finish button should allow users to submit a form,page,etc. then allow user to reset
                             onClick={handleNext}
                             variant= "conatained"
                         >
-                            {completedSteps === totalSteps - 1 ? 'Finish': 'Next'} {/**if true then render finish, otherwise next */}
-                        </basicButton>
+                            {completedSteps === totalSteps - 1 ? 'Complete': 'Accept'} 
+                        </basicButton> {/*if true then render finish, otherwise next*/} 
+                        </Box>
                     </>
                 )}       
             </div>
-        </div>
+        </Box>
     )
 }
 export default Progress;

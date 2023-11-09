@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Button from '@mui/material/StepLabel';
 
 const basicButton = ({children,color,disabled,size,variant,sx}) => {

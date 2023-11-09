@@ -11,6 +11,7 @@ import {Navbar, NavLink, Nav, Container} from 'react-bootstrap';
 import Logout from './logout';
 import Marketplace from './marketplace';
 import Progress from './progress';
+import ChatBox2 from './ChatBox2';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           {/*needs authorization feature to be implemented*/}
           <NavLink href="/market">Marketplace</NavLink>
           <NavLink href="/progress">Progress</NavLink>
+          <NavLink href="/ChatBox2">ChatBox</NavLink>
         </Nav>
         <Logout/>
       </Navbar>
@@ -41,6 +43,7 @@ function App() {
             <Route path="/market" element={<Marketplace />}></Route>
             <Route path="/reset_password" element={<ResetPassword />}></Route>
             <Route path="/progress" element={<Progress />}></Route> 
+            <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
           </Routes>
 
         </header>
