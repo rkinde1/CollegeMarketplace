@@ -37,7 +37,12 @@ function Login() {
                 alert('Success');
                 console.log('Success');
                 localStorage.setItem('email', email);
+
+                //this guy is now an authorized user
+
+                localStorage.setItem("authorized", true);
                 navigate('/market');
+                window.location.reload();
                 return res.json();
             }
             else {
