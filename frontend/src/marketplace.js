@@ -33,41 +33,6 @@ function Marketplace () {
     }
 
 
-
-    const deleteRequest = async (_id) => {
-        await fetch(`/api/items/delete/${_id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then((res) => {
-            if (res.status === 200) {
-                alert('Success');
-                return res.json();
-            } else {
-                alert('Failed');
-            }
-        })
-        .then((data) => {
-            alert("deleted");
-            // alert(JSON.stringify(data));
-            // window.location.reload();
-        })
-    }
-
-    const handleDelete = async (_id) => {
-        return (
-            <div>
-                <form onSubmit={deleteRequest(_id)}>
-                    <h1>Are you sure you want to delete this item?</h1>
-                    <button type="submit">Yes</button>
-                    <button>No</button>
-                </form>
-            </div>
-        )
-    }
-
     return (
         <div>
             <h1>Marketplace</h1>

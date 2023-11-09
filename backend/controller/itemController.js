@@ -42,7 +42,7 @@ const viewSingleItem = async (req, res) => {
 const deleteItem = async (req, res) => {
     try {
         const item = await Item.findById(req.params.id);
-        await item.remove();
+        await item.deleteOne({ _id: req.params.id })
         res.status(200).json({ message: 'Item deleted successfully' });
     } catch (error) {
         console.log(error);
