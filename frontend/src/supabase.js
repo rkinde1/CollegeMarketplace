@@ -1,6 +1,6 @@
 import {createClient} from '@supabase/supabase-js';
 import OpenAI from 'openai';
-
+import env from 'react-dotenv';
 
 //Begining of supabase DB
 //Initialize supabase client
@@ -11,7 +11,7 @@ async function generateEmbeddings(){
 
   //intialize openai api
   const openai = new OpenAI({
-    apiKey:"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",
+    apiKey: process.env.REACT_APP_AI_KEY,
     dangerouslyAllowBrowser: true
   });
 
