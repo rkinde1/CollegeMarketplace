@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 import Popup from "reactjs-popup";
 import { Button } from 'react-bootstrap';
 import UpdateProfile from "./UpdateProfile"
-import MyItems from "./myItems"
+import MyItems from "./myRequests"
 
 
 function Profile () {

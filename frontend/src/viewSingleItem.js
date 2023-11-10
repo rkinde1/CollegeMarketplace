@@ -56,6 +56,15 @@ function ViewSingleItem() {
         })
     }
 
+    const checkDelete = () => {
+        if (localStorage.getItem('email') === item.sellerEmail) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     return (
         <div>
             <div className="viewItem">
@@ -66,9 +75,15 @@ function ViewSingleItem() {
                 <h1>${item.itemPrice}</h1>
                 <h1>Quantity: {item.itemQuantity}</h1>
                 <h1>seller: {item.sellerEmail}</h1>
-                <form method="DELETE" onSubmit={deleteRequest}>
-                    <button type="submit" style={{backgroundColor: "red", float: "center"}}>Delete Item</button>
-                </form>
+                {
+                    checkDelete() ? (
+                        <form method="DELETE" onSubmit={deleteRequest}>
+                            <button type="submit" style={{backgroundColor: "red", float: "center"}}>Delete Item</button>
+                        </form> 
+                    ) : (
+                        <div></div>
+                    )
+                }
                 <form onSubmit={initiateTransaction}>
                     <button style={{float: "right", background: "green"}}>Initiate Transaction</button>
                 </form>

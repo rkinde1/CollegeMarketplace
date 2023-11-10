@@ -6,6 +6,8 @@ const transactionSchema = new mongoose.Schema({
     amount: { type: Number, required: true },
     date: { type: Date, default: Date.now },
     itemId: { type: String, required: true },
+    itemName: { type: String, required: true },
+    itemImage: { type: String, required: true },
     status: { type: Boolean, default: false , required: true},
     sellerApproved: { type: Boolean, default: false , required: true},
     buyerApproved: { type: Boolean, default: false , required: true},
