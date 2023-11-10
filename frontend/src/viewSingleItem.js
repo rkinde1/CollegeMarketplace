@@ -37,6 +37,24 @@ function ViewSingleItem() {
         })
     }
 
+    const initiateTransaction = async (e) => {
+        e.preventDefault();
+        await fetch(`/api/transaction/create`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({seller: item.sellerEmail, buyer: localStorage.getItem('email'), amount: item.itemPrice, itemId: id})
+        })
+        .then((res) => {
+            if (res.status === 200) {
+                alert('Success');
+            }
+            else {
+                alert(res.status);
+            }
+        })
+    }
 
     return (
         <div>
@@ -51,7 +69,7 @@ function ViewSingleItem() {
                 <form method="DELETE" onSubmit={deleteRequest}>
                     <button type="submit" style={{backgroundColor: "red", float: "center"}}>Delete Item</button>
                 </form>
-                <form>
+                <form onSubmit={initiateTransaction}>
                     <button style={{float: "right", background: "green"}}>Initiate Transaction</button>
                 </form>
                 <form>

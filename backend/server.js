@@ -17,6 +17,7 @@ app.use('/api/comments', require('./routes/commentRoute'));
 app.use('/api/email', require('./routes/emailRoute'));
 app.use('/api/reset', require('./routes/reset-password'));
 app.use('/api/forgot-password', require('./routes/forgot-password'));
+app.use('/api/transaction', require('./routes/transactionRoute'));
 
 app.listen(PORT, ()=> {
     console.log(`Server running on port ${PORT}`)

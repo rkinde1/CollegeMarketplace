@@ -17,6 +17,7 @@ import PrivateRoutes from './privateRoutes';
 import ViewSingleItem from './viewSingleItem';
 import Progress from './progress';
 import ChatBox2 from './ChatBox2';
+import MyItems from './myItems';
 
 function App() {
   const PrivateRoutes = () => {
@@ -27,6 +28,7 @@ function App() {
           <NavLink href="/profile">Profile</NavLink>
           <NavLink href="/progress">Progress</NavLink>
           <NavLink href="/ChatBox2">ChatBox</NavLink>
+          <NavLink href="/myItems">My Items</NavLink>
           <Logout/>
         </Nav>
       )
@@ -51,6 +53,7 @@ function App() {
         <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
         <Route path="/progress" element={<Progress />}></Route> 
         <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
+        <Route path="/myItems" element={<MyItems />}></Route>
       </Route>
       )
     } else {
