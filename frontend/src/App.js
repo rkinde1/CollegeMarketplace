@@ -19,6 +19,7 @@ import Progress from './progress';
 import ChatBox2 from './ChatBox2';
 import MyRequests from './myRequests';
 import MyItems from './myItems';
+import CreateComment from './createComment';
 
 function App() {
   const PrivateRoutes = () => {
@@ -57,6 +58,7 @@ function App() {
         <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
         <Route path="/myRequests" element={<MyRequests />}></Route>
         <Route path="/myItems" element={<MyItems />}></Route>
+        <Route path="/createComment" element={<CreateComment />}></Route>
       </Route>
       )
     } else {

@@ -157,13 +157,23 @@ function MyRequests() {
                         )
                     }
                     <p>Seller Approved: {sellerApproved(item)}</p>
+                    { item.sellerApproved === true && item.buyerApproved === true ? 
+                        (
+                            //Rating form
+                            <Link to={`/createComment`}>
+                                <button>Rate</button>
+                            </Link>
+                            
+                        ) : (
+                            <form onSubmit={deleteTransaction(item._id)}>
+                                <button type="submit" style={{backgroundColor: 'red'}}>Delete Transaction</button>
+                            </form>
+                        )
+                    }
                     <form>
                         <Link to={`/item/${item.itemId}`}>
                             <button type="submit">View Item</button>
                         </Link>
-                    </form>
-                    <form onSubmit={deleteTransaction(item._id)}>
-                        <button type="submit" style={{backgroundColor: 'red'}}>Delete Transaction</button>
                     </form>
                 </div>   
                 ))}

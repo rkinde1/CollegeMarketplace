@@ -116,18 +116,18 @@ function MyItems() {
                     <p>{item.buyerApproved}</p>
                     <p>{item.sellerApproved}</p>
                     <p>Status: {status(item)}</p>
-                    <p>Buyer Approved:</p>
-                    <p>Seller Approved: {buyerApproved(item)}</p>
+                    <p>Buyer Approved: {buyerApproved(item)}</p>
+                    <p>Seller Approved: </p>
                     { item.sellerApproved === true ? 
-                    (
-                        <form onSubmit={deleteSellerApproved(item._id)}>
-                            <button type="submit">Cancel</button>
-                        </form>
-                    ) : (
-                        <form onSubmit={changeSellerApproved(item._id)}>
-                            <button type="submit" style={{backgroundColor: 'green'}}>Approve</button>
-                        </form>
-                    )
+                        (
+                            <form onSubmit={deleteSellerApproved(item._id)}>
+                                <button type="submit">Cancel</button>
+                            </form>
+                        ) : (
+                            <form onSubmit={changeSellerApproved(item._id)}>
+                                <button type="submit" style={{backgroundColor: 'green'}}>Approve</button>
+                            </form>
+                        )
                     }
                     <form>
                         <Link to={`/item/${item.itemId}`}>
