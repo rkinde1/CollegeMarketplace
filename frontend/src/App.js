@@ -19,6 +19,7 @@ import Progress from './progress';
 import ChatBox2 from './ChatBox2';
 import MyRequests from './myRequests';
 import MyItems from './myItems';
+import Message from './message';
 import CreateComment from './createComment';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Nav>
           <NavLink href="/market">Marketplace</NavLink>
           <NavLink href="/profile">Profile</NavLink>
+          <NavLink href="/message">Message</NavLink>
           <NavLink href="/progress">Progress</NavLink>
           <NavLink href="/ChatBox2">ChatBox</NavLink>
           <NavLink href="/myRequests">My Requests</NavLink>
@@ -53,6 +55,7 @@ function App() {
       <Route>
         <Route path="/market" element={<Marketplace />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/message" element={<Message />}></Route>
         <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
         <Route path="/progress" element={<Progress />}></Route> 
         <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
@@ -82,6 +85,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
             <Route path='/profile-update' element={<UpdateProfile/>}></Route>
+            <Route path="/message" element={<Message />}></Route>
             <Route path="/reset_password/:id/:token" element={<ResetPassword />}></Route>
             <Route path="/verify" element={<OTPInput />}></Route>
             {PrivateRoutes2()}
