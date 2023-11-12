@@ -30,6 +30,7 @@ const Message = () =>{
             onChange = {(event) => {
                 setUsername(event.target.value);
             } }/>
+        {/* Pass item ID here */}
         <input 
             type = "text" 
             placeholder = "item ID here"
