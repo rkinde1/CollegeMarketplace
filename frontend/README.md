@@ -68,3 +68,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### This is to run messaging 
+
+do this in terminal one terminal... cd backend (enter) npm i socket.io (enter) 
+do this in another terminal... cd frontend (enter) npm install socket.io-client (enter) npm i socket.io (enter)

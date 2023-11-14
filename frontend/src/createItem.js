@@ -49,7 +49,7 @@ function CreateItem () {
     }
 
     return (
-        <div>
+        <div style={{width: '200%'}}>
             <h1>Create Item</h1>
             <form onSubmit={handleCreateItem} method="POST">
                 <input type="text" placeholder="Name" id="name" onChange={(e) => setItemName(e.target.value)} value={itemName}/>

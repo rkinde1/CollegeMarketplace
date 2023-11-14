@@ -3,6 +3,7 @@ import {Link} from "react-router-dom"
 import Popup from "reactjs-popup";
 import { Button } from 'react-bootstrap';
 import UpdateProfile from "./UpdateProfile"
+import MyItems from "./myRequests"
 
 
 function Profile () {
@@ -56,7 +57,6 @@ function Profile () {
             setComments(data);
         })
     }
-   
    
 
     const divStyle = {
