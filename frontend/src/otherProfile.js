@@ -21,6 +21,8 @@ function Profile () {
         .catch(err => console.log(err))
     }, [email])
 
+
+    
     //authorization token
     const token = localStorage.getItem("token");       
 

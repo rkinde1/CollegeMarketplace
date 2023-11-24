@@ -5,7 +5,7 @@ const {profile, uploadBio, uploadIcon, viewSingleProfile} = require('../controll
 router.route('/profile').post(profile);
 router.route('/uploadBio').post(uploadBio);
 router.route('/uploadIcon').post(uploadIcon);
-router.route('/:id').post(viewSingleProfile);
+router.route('/:email').post(viewSingleProfile);
 
 
 module.exports = router;

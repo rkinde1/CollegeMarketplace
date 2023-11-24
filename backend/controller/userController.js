@@ -82,10 +82,11 @@ const uploadBio = async (req, res) => {
     }
     else{return res.status(400).json({ message: 'upload failed' });}
 }
+
 const viewSingleProfile = async (req, res) => {
     try {
-        const newUser = await User.findById(req.params.email);
-        res.status(200).json(newUser);
+        const user = await User.findOne(email);
+        res.status(200).json(user);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Error viewing user' });
