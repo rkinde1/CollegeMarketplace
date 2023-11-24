@@ -85,7 +85,7 @@ const uploadBio = async (req, res) => {
 
 const viewSingleProfile = async (req, res) => {
     try {
-        const user = await User.findOne(email);
+        const user = await User.findOne(req.params.email);
         res.status(200).json(user);
     } catch (error) {
         console.log(error);
