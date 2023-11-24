@@ -82,5 +82,14 @@ const uploadBio = async (req, res) => {
     }
     else{return res.status(400).json({ message: 'upload failed' });}
 }
+const viewSingleProfile = async (req, res) => {
+    try {
+        const newUser = await User.findById(req.params.email);
+        res.status(200).json(newUser);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error viewing user' });
+    }
+}
 
-module.exports = { register, login, profile, uploadIcon, uploadBio};
+module.exports = { register, login, profile, uploadIcon, uploadBio, viewSingleProfile};
