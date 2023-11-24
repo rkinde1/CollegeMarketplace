@@ -14,8 +14,6 @@ const register = async (req, res) => {
     try {
         const newUser = await User.create({ firstName, lastName, email, gradYear, password: hashedPassword, otp: OTP, verified: false  });
         newUser.defaultImage = "https://res.cloudinary.com/dt5nkkekl/image/upload/v1699319819/Profile/ocriia9h6i6wd3t94zdi.png";
-        newUser.rating = 0;
-        newUser.amountOfRatings = 0;
         newUser.bio ="";
         await newUser.save();
         res.status(200).json({ message: 'User created successfully' });

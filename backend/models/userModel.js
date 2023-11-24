@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
     defaultImage:{ type: String, required: false},
     bio:{type: String, required: false},
     gradYear:{type: String, required: true},
-    rating:{type: Number, required: false},
-    amountOfRatings:{type: Number, required: false},
+    rating:{type: 0, required: false},
+    amountOfRatings:{type: 0, required: false},
     otp: { type: String, required: true },
     verified: { type: Boolean, required: true, default: false },
 })

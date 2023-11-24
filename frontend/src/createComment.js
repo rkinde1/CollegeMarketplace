@@ -12,7 +12,7 @@ function CreateComment () {
 
     const handleCreateComment = (e) => {
         e.preventDefault();
-        axios.post(`/api/comment/create/${userFor}`,{commentDescription}, {posterEmail}, {rating})
+        axios.post(`/api/comments/create/${userFor}`,{commentDescription}, {posterEmail}, {rating})
         .then(res => {
             if (res.status === 200) {
                 alert('Success');

@@ -11,17 +11,12 @@ const createComment = async (req, res) => {
         user.amountOfRatings++;
         user.rating = (user.rating + rating)/ user.amountOfRatings;
         await user.save();
+        const newComment = await Comment.create({ commentDescription, posterEmail, userFor, rating});
+        await newComment.save();
+        res.status(200).json({ message: 'Comment created successfully' });
     }catch(error){
         console.log(error);
         res.status(500).json({ message: 'Error changing rating' });
-    }
-    try {
-      const newComment = await Comment.create({ commentDescription, posterEmail, userFor, rating});
-        await newComment.save();
-        res.status(200).json({ message: 'Comment created successfully' });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: 'Error creating Comment' });
     }
 }
 
