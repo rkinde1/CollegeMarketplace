@@ -58,7 +58,6 @@ function App() {
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/message" element={<Message />}></Route>
         <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
-        <Route path="/profile/:email" element={<ViewSingleProfile/>}></Route>
         <Route path="/progress" element={<Progress />}></Route> 
         <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
         <Route path="/myRequests" element={<MyRequests />}></Route>
@@ -82,6 +81,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Routes>
+            <Route path="/profile/:email" element={<ViewSingleProfile/>}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>

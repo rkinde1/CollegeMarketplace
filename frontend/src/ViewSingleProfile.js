@@ -1,11 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {Link, useParams} from "react-router-dom"
-import Popup from "reactjs-popup";
-import { Button } from 'react-bootstrap';
-import MyItems from "./myRequests"
 import axios from 'axios'
-
-
 
 function Profile () {
     const {email} = useParams()
@@ -16,6 +11,7 @@ function Profile () {
     useEffect(() => {
         axios.post(`/api/profile/${email}`)
         .then(res => {
+            console.log("Set person");
           setPerson(res.data);
         })
         .catch(err => console.log(err))

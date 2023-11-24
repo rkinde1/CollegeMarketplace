@@ -84,10 +84,12 @@ const uploadBio = async (req, res) => {
 }
 
 const viewSingleProfile = async (req, res) => {
+    console.log("in controller");
     try {
-        const user = await User.findOne(req.params.email);
+        const user = await User.findOne(email);
         res.status(200).json(user);
     } catch (error) {
+        console.log("error in controler");
         console.log(error);
         res.status(500).json({ message: 'Error viewing user' });
     }
