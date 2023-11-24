@@ -160,9 +160,7 @@ function MyRequests() {
                     { item.sellerApproved === true && item.buyerApproved === true ? 
                         (
                             //Rating form
-                            <Link to={`/createComment`}>
-                                <button>Rate</button>
-                            </Link>
+                            <Link to={`/createComment/${item.seller}`}> <button type= "submit">Write Review</button></Link>
                             
                         ) : (
                             <form onSubmit={deleteTransaction(item._id)}>
@@ -170,6 +168,7 @@ function MyRequests() {
                             </form>
                         )
                     }
+
                     <form>
                         <Link to={`/item/${item.itemId}`}>
                             <button type="submit">View Item</button>

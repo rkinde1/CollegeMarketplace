@@ -4,7 +4,8 @@ const Comment = require('../models/commentModel');
 
 
 const createComment = async (req, res) => {
-    const { commentDescription, posterEmail, userFor, rating} = req.body;
+    const {userFor} = req.params;
+    const { commentDescription, posterEmail, rating} = req.body;
     try{
         const user = await User.findOne({userFor});
         user.amountOfRatings++;
