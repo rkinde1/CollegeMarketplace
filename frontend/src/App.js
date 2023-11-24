@@ -21,7 +21,7 @@ import MyRequests from './myRequests';
 import MyItems from './myItems';
 import Message from './message';
 import CreateComment from './createComment';
-import OtherProfile from './OtherProfile';
+import ViewSingleProfile from './ViewSingleProfile';
 
 function App() {
   const PrivateRoutes = () => {
@@ -58,7 +58,7 @@ function App() {
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/message" element={<Message />}></Route>
         <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
-        <Route path="/profile/:email" element={<OtherProfile/>}></Route>
+        <Route path="/profile/:email" element={<ViewSingleProfile/>}></Route>
         <Route path="/progress" element={<Progress />}></Route> 
         <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
         <Route path="/myRequests" element={<MyRequests />}></Route>
