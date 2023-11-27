@@ -12,6 +12,7 @@ function Profile () {
     const [person, setPerson] = useState([]);
     const forUser = email;
 
+
     //authorization token
     const token = localStorage.getItem("token");   
 
@@ -36,7 +37,7 @@ function Profile () {
         });
     
 
-    const handleComments = (e) => {
+        const handleComments = async (e) => {
         fetch('/api/comments/view', {
             method: 'POST',
             headers: {

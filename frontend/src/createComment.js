@@ -11,6 +11,13 @@ function CreateComment () {
     const {userFor} = useParams()
 
     const handleCreateComment = (e) => {
+        if(newRating<1 || newRating > 5){
+            alert("Rating must be between 1 and 5");
+            return;
+        }else if(!commentDescription){
+            alert("Must fill out description");
+            return;
+        }
         e.preventDefault();
         fetch('/api/comments/create',{
             method: 'POST',
@@ -36,29 +43,6 @@ function CreateComment () {
             }
         })
         .catch(err => console.log(err))
-        // fetch('/api/comment/create/:userFor', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ commentDescription, posterEmail, userFor, rating }),
-        // })
-        // .then((res) => {
-        //     if (res.status === 200) {
-        //         alert('Success');
-        //         window.location.reload();
-        //         console.log('Success');
-        //         return res.json();
-        //     } else if (res.status === 400) {
-        //         alert('Comment already exists');
-        //         console.log('Comment already exists');
-        //     }
-        //     else {
-        //         alert('Failed');
-        //         alert(res.status);
-        //         console.log('Failed');
-        //     }
-        // })
 
     }
 
