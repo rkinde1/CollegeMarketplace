@@ -54,11 +54,12 @@ function Profile () {
                 return res.json();
             } else {
                 console.log('Failed');
+                return res.json();
             }
         })
         .then((data) => {
             alert(JSON.stringify(data));
-            setComments(data);
+            setComments(data.comments);
         })
     }
    
