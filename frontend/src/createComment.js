@@ -12,7 +12,13 @@ function CreateComment () {
 
     const handleCreateComment = (e) => {
         e.preventDefault();
-        axios.post(`/api/comments/create/${userFor}`,{commentDescription}, {posterEmail}, {newRating})
+        fetch('/api/comments/create',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({commentDescription, posterEmail, newRating, userFor}),
+        })
         .then(res => {
             if (res.status === 200) {
                 alert('Success');
