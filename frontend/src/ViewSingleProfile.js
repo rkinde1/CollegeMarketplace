@@ -9,13 +9,13 @@ function Profile () {
     const forUser = email;
 
     useEffect(() => {
-        axios.post(`/api/profile/${email}`)
+        axios.post(`/api/profile/`, {email})
         .then(res => {
             console.log("Set person");
           setPerson(res.data);
         })
         .catch(err => console.log(err))
-    }, [email])
+    })
 
 
     

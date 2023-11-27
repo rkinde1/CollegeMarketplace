@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     bio:{type: String, required: false},
     gradYear:{type: String, required: true},
     rating:{type: Number, required: false},
-    amountOfRatings:{type: Number, required: false},
+    amountOfRatings:{type: Number, required: true},
     otp: { type: String, required: true },
     verified: { type: Boolean, required: true, default: false },
 })

@@ -7,21 +7,29 @@ import {useParams } from "react-router-dom";
 function CreateComment () {
     const [commentDescription, setCommentDescription] = useState('');
     const posterEmail = localStorage.getItem('email');
-    const [rating, setRating] = useState('');
+    const [rating, setRating] = useState(0);
     const {userFor} = useParams()
 
     const handleCreateComment = (e) => {
         e.preventDefault();
-        axios.post(`/api/comment/create/${userFor}`,{commentDescription}, {posterEmail}, {rating})
+        const commentData = {
+            commentDescription: commentDescription,
+            posterEmail: posterEmail,
+            rating: rating,
+        }
+        axios.post(`/api/comments/create/${userFor}`, commentData)
         .then(res => {
             if (res.status === 200) {
                 alert('Success');
-                window.location.reload();
+                // window.location.reload();
                 console.log('Success');
                 return res.json();
             } else if (res.status === 400) {
                 alert('Comment already exists');
                 console.log('Comment already exists');
+            }
+            else if (res.status === 401 ) {
+                alert('Unauthorized');
             }
             else {
                 alert('Failed');
