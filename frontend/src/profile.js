@@ -4,6 +4,8 @@ import Popup from "reactjs-popup";
 import { Button } from 'react-bootstrap';
 import UpdateProfile from "./UpdateProfile"
 import MyItems from "./myRequests"
+import "./comment.css";
+
 
 
 function Profile () {
@@ -15,7 +17,7 @@ function Profile () {
 
     //authorization token
     const token = localStorage.getItem("token");   
-
+    useEffect(() => {
         fetch('/api/profile/profile',{
             method: 'POST',
             headers: {
@@ -35,6 +37,7 @@ function Profile () {
             // alert(JSON.stringify(data));
             setPerson(data);
         });
+    }, [email]);
     
 
         const handleComments = async (e) => {
