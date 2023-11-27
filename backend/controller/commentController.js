@@ -5,10 +5,10 @@ const Comment = require('../models/commentModel');
 const createComment = async (req, res) => {
     const { commentDescription, posterEmail, newRating, userFor} = req.body;
     const email = userFor;
+    const rating = newRating;
   
     var part1;
-    var rating;
-    var newRatingCalc;
+  
 
     try{
 
@@ -21,7 +21,7 @@ const createComment = async (req, res) => {
         user.rating = user.rating.toFixed(1);
 
         await user.save();
-        const newComment = await Comment.create({ commentDescription, posterEmail, userFor, newRating});
+        const newComment = await Comment.create({ commentDescription, posterEmail, userFor, rating});
         await newComment.save();
         res.status(200).json({ message: 'Comment created successfully' });
     }catch(error){

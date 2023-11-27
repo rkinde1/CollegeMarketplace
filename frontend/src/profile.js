@@ -58,7 +58,7 @@ function Profile () {
             }
         })
         .then((data) => {
-            alert(JSON.stringify(data));
+            //alert(JSON.stringify(data));
             setComments(data.comments);
         })
     }
@@ -91,9 +91,8 @@ function Profile () {
                 
                 {comments.map((comment) => (
                     <div className="comment" key={comment._id}>
-                        <h2>{comment.commentDescription}</h2>
-                        <h2>{comment.rating}</h2>
-                        <p1>{comment.date}</p1>
+                        <h2>Rating: {comment.rating}</h2>
+                        <h2>Comment: {comment.commentDescription}</h2>
                         <p className="userFont">{comment.posterEmail}</p>
                     </div>   
                     ))}

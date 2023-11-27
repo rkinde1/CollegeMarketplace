@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react"
 import {Link, useParams} from "react-router-dom"
 import axios from 'axios'
+import "./comment.css";
+
 
 function Profile () {
     const {email} = useParams()
@@ -9,7 +11,7 @@ function Profile () {
     const forUser = email;
 
     useEffect(() => {
-        axios.post(`/api/profile/`, {email})
+        axios.post(`/api/profile/${email}`)
         .then(res => {
             console.log("Set person");
           setPerson(res.data);
@@ -22,13 +24,13 @@ function Profile () {
     //authorization token
     const token = localStorage.getItem("token");       
 
-    const handleComments = (e) => {
-        fetch('/api/comments/view', {
+    const handleComments = async (e) => {
+        await fetch('/api/comments/view', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({forUser}),
+            body: JSON.stringify({userFor: forUser}),
         })
         .then((res) => {
             if (res.status === 200) {
@@ -36,11 +38,12 @@ function Profile () {
                 return res.json();
             } else {
                 console.log('Failed');
+                return res.json();
             }
         })
         .then((data) => {
-            // alert(JSON.stringify(data));
-            setComments(data);
+            //alert(JSON.stringify(data));
+            setComments(data.comments);
         })
     }
    
@@ -70,9 +73,8 @@ function Profile () {
                 <div className="comment-list">
                 {comments.map((comment) => (
                     <div className="comment" key={comment._id}>
-                        <h2>{comment.commentDescription}</h2>
-                        <h2>{comment.rating}</h2>
-                        <p1>{comment.date}</p1>
+                        <h2>Rating: {comment.rating}</h2>
+                        <h2>Comment: {comment.commentDescription}</h2>
                         <p className="userFont">{comment.posterEmail}</p>
                     </div>   
                     ))}
