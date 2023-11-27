@@ -46,7 +46,7 @@ function Profile () {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({forUser}),
+            body: JSON.stringify({userFor: forUser}),
         })
         .then((res) => {
             if (res.status === 200) {
@@ -57,7 +57,7 @@ function Profile () {
             }
         })
         .then((data) => {
-            // alert(JSON.stringify(data));
+            alert(JSON.stringify(data));
             setComments(data);
         })
     }
@@ -85,8 +85,9 @@ function Profile () {
             </div>
             <Link to= '/profile-update' className='btn btn-primary'>Update Profile</Link>
             <div>
-                <button onClick={handleComments}method="POST">View Comments</button>
+                <button onClick={handleComments} method="POST">View Comments</button>
                 <div className="comment-list">
+                
                 {comments.map((comment) => (
                     <div className="comment" key={comment._id}>
                         <h2>{comment.commentDescription}</h2>

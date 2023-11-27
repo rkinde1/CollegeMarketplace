@@ -34,7 +34,7 @@ const createComment = async (req, res) => {
 const viewComment = async (req, res) => {
     const {userFor} = req.body;
     try {
-        const comments = await Comment.findOne(userFor);
+        const comments = await Comment.findOne({userFor});
         res.status(200).json(comments);
     } catch (error) {
         console.log(error);
