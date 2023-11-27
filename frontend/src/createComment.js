@@ -7,12 +7,12 @@ import {useParams } from "react-router-dom";
 function CreateComment () {
     const [commentDescription, setCommentDescription] = useState('');
     const posterEmail = localStorage.getItem('email');
-    const [rating, setRating] = useState('');
+    const [newRating, setNewRating] = useState('');
     const {userFor} = useParams()
 
     const handleCreateComment = (e) => {
         e.preventDefault();
-        axios.post(`/api/comments/create/${userFor}`,{commentDescription}, {posterEmail}, {rating})
+        axios.post(`/api/comments/create/${userFor}`,{commentDescription}, {posterEmail}, {newRating})
         .then(res => {
             if (res.status === 200) {
                 alert('Success');
@@ -61,7 +61,7 @@ function CreateComment () {
             <h1>Create Comment For </h1>
             <form onSubmit={handleCreateComment} method="POST">
                 <input type="text" placeholder="Description" id="description" onChange={(e) => setCommentDescription(e.target.value)} value={commentDescription}/>
-                <input type="number" placeholder="Rating" id="rating" onChange={(e) => setRating(e.target.value)} value={rating}/>
+                <input type="number" placeholder="Rating" id="rating" onChange={(e) => setNewRating(e.target.value)} value={newRating}/>
                 <button type="submit">Submit</button>
             </form>
         </div>

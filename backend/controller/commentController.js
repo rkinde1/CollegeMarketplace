@@ -4,12 +4,12 @@ const Comment = require('../models/commentModel');
 
 
 const createComment = async (req, res) => {
-    const {userFor} = req.params;
-    const { commentDescription, posterEmail, rating} = req.body;
+    const { userFor } = req.params;
+    const { commentDescription, posterEmail, newRating} = req.body;
+    const email = userFor;
     try{
-        const user = await User.findOne({userFor});
-        user.amountOfRatings++;
-        user.rating = (user.rating + rating)/ user.amountOfRatings;
+        const user = await User.findOne({email});  
+         user.rating = (user.rating + newRating)/ user.amountOfRatings;
         await user.save();
         const newComment = await Comment.create({ commentDescription, posterEmail, userFor, rating});
         await newComment.save();
