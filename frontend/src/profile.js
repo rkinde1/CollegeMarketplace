@@ -4,6 +4,8 @@ import Popup from "reactjs-popup";
 import { Button } from 'react-bootstrap';
 import UpdateProfile from "./UpdateProfile"
 import MyItems from "./myRequests"
+import "./comment.css";
+
 
 
 function Profile () {
@@ -12,9 +14,10 @@ function Profile () {
     const [person, setPerson] = useState([]);
     const forUser = email;
 
+
     //authorization token
     const token = localStorage.getItem("token");   
-
+    useEffect(() => {
         fetch('/api/profile/profile',{
             method: 'POST',
             headers: {
@@ -34,15 +37,16 @@ function Profile () {
             // alert(JSON.stringify(data));
             setPerson(data);
         });
+    }, [email]);
     
 
-    const handleComments = (e) => {
-        fetch('/api/comments/view', {
+        const handleComments = async (e) => {
+        await fetch('/api/comments/view', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({forUser}),
+            body: JSON.stringify({userFor: forUser}),
         })
         .then((res) => {
             if (res.status === 200) {
@@ -53,7 +57,7 @@ function Profile () {
             }
         })
         .then((data) => {
-            // alert(JSON.stringify(data));
+            alert(JSON.stringify(data));
             setComments(data);
         })
     }
@@ -81,8 +85,9 @@ function Profile () {
             </div>
             <Link to= '/profile-update' className='btn btn-primary'>Update Profile</Link>
             <div>
-                <button onClick={handleComments}method="POST">View Comments</button>
+                <button onClick={handleComments} method="POST">View Comments</button>
                 <div className="comment-list">
+                
                 {comments.map((comment) => (
                     <div className="comment" key={comment._id}>
                         <h2>{comment.commentDescription}</h2>

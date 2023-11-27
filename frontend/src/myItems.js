@@ -136,8 +136,7 @@ function MyItems() {
                         (
                             <Link to={`/createComment/${item.buyer}`}> <button type= "submit">Write Review</button></Link>
                         ):(
-                            //set to null after testing
-                            <Link to={`/createComment/${item.buyer}`}> <button type= "submit">Write Review</button></Link>
+                            null
                         )
                     
                     }

@@ -3,27 +3,28 @@ const User = require('../models/userModel');
 const Comment = require('../models/commentModel');
 
 const createComment = async (req, res) => {
-    const {userFor} = req.params;
-    const { commentDescription, posterEmail, rating} = req.body;
+    const { commentDescription, posterEmail, newRating, userFor} = req.body;
+    const email = userFor;
+  
+    var part1;
+    var rating;
+    var newRatingCalc;
+
     try{
-        const user = await User.findOne({email: userFor});
-        user.amountOfRatings = user.amountOfRatings + 1;
-        if (user.rating === null || user.rating === undefined || user.rating === NaN || user.rating === ""){
-            user.rating = rating;
-            user.amountOfRatings = 1;
-        }
-        if (user.rating === 0){
-            user.rating = rating;
-            user.amountOfRatings = 1;
-        }
-        else {
-            user.rating = (user.rating * (user.amountOfRatings -1) + rating)/ user.amountOfRatings
-        }
-        const newComment = await Comment.create({ commentDescription, posterEmail, userFor, rating});
-        await newComment.save();
+
+        const user = await User.findOne({email}); 
+
+        user.amountOfRatings++;        
+    
+        part1 = (parseFloat(user.rating) + parseFloat(newRating));
+        user.rating = part1/ user.amountOfRatings;       
+        user.rating = user.rating.toFixed(1);
+
         await user.save();
+        const newComment = await Comment.create({ commentDescription, posterEmail, userFor, newRating});
+        await newComment.save();
         res.status(200).json({ message: 'Comment created successfully' });
-    } catch(error){
+    }catch(error){
         console.log(error);
         res.status(500).json({ message: 'Error changing rating' });
     }
@@ -32,7 +33,7 @@ const createComment = async (req, res) => {
 const viewComment = async (req, res) => {
     const {userFor} = req.body;
     try {
-        const comments = await Comment.findOne(userFor);
+        const comments = await Comment.findOne({userFor});
         res.status(200).json(comments);
     } catch (error) {
         console.log(error);
