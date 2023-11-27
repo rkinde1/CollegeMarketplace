@@ -41,7 +41,7 @@ function Profile () {
     
 
         const handleComments = async (e) => {
-        fetch('/api/comments/view', {
+        await fetch('/api/comments/view', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
