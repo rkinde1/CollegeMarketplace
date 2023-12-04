@@ -14,8 +14,8 @@ const register = async (req, res) => {
     try {
         const newUser = await User.create({ firstName, lastName, email, gradYear, password: hashedPassword, otp: OTP, verified: false  });
         newUser.defaultImage = "https://res.cloudinary.com/dt5nkkekl/image/upload/v1699319819/Profile/ocriia9h6i6wd3t94zdi.png";
-        newUser.rating = 0;
         newUser.amountOfRatings = 0;
+        newUser.rating = 0;
         newUser.bio ="";
         await newUser.save();
         res.status(200).json({ message: 'User created successfully' });
@@ -64,7 +64,7 @@ const uploadIcon = async (req, res) => {
 
         user.defaultImage = result.secure_url;
         await user.save();
-        res.status(200).json;
+        res.status(200).json({ message: 'upload successful' });
     }catch{
 
     }
@@ -72,15 +72,28 @@ const uploadIcon = async (req, res) => {
 
 const uploadBio = async (req, res) => {
     const { email, bio} = req.body;
-    const user =await User.findOne({email});
+    const user = await User.findOne({email});
     if(user){
         console.log("User found");
         user.bio = bio;
         await user.save();
-        res.status(200).json;
+        res.status(200).json({ message: 'upload successful' });
         
     }
     else{return res.status(400).json({ message: 'upload failed' });}
 }
 
-module.exports = { register, login, profile, uploadIcon, uploadBio};
+const viewSingleProfile = async (req, res) => {
+    const { email } = req.params;
+    try {
+        const user = await User.findOne({email});
+        if(user){
+            console.log("User found");
+            res.status(200).json(user);
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error viewing user' });
+    }
+}
+
+module.exports = { register, login, profile, uploadIcon, uploadBio, viewSingleProfile};

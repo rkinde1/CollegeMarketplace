@@ -22,7 +22,7 @@ const sendPasswordResetEmail = async (req, res) => {
         from: process.env.EMAIL_ADDRESS, // Enter your gmail account
         to: email,
         subject: "Password Reset Link",
-        text: `http://localhost:3000/reset_password/${user._id}/${token}`
+        text: `Click this link to reset your password for your College Marketplace account http://localhost:3000/reset_password/${user._id}/${token}`
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {

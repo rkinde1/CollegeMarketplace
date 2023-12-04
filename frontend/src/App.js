@@ -15,6 +15,13 @@ import UpdateProfile from './UpdateProfile';
 import OTPInput from './OTPInput';
 import PrivateRoutes from './privateRoutes';
 import ViewSingleItem from './viewSingleItem';
+import Progress from './progress';
+import ChatBox2 from './ChatBox2';
+import MyRequests from './myRequests';
+import MyItems from './myItems';
+import Message from './message';
+import CreateComment from './createComment';
+import ViewSingleProfile from './ViewSingleProfile';
 
 function App() {
   const PrivateRoutes = () => {
@@ -23,6 +30,11 @@ function App() {
         <Nav>
           <NavLink href="/market">Marketplace</NavLink>
           <NavLink href="/profile">Profile</NavLink>
+          <NavLink href="/message">Message</NavLink>
+          <NavLink href="/progress">Progress</NavLink>
+          <NavLink href="/ChatBox2">ChatBox</NavLink>
+          <NavLink href="/myRequests">My Requests</NavLink>
+          <NavLink href="/myItems">My Items</NavLink>
           <Logout/>
         </Nav>
       )
@@ -44,7 +56,13 @@ function App() {
       <Route>
         <Route path="/market" element={<Marketplace />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/message" element={<Message />}></Route>
         <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
+        <Route path="/progress" element={<Progress />}></Route> 
+        <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
+        <Route path="/myRequests" element={<MyRequests />}></Route>
+        <Route path="/myItems" element={<MyItems />}></Route>
+        <Route path="/createComment/:userFor" element={<CreateComment />}></Route>
       </Route>
       )
     } else {
@@ -63,11 +81,13 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Routes>
+            <Route path="/profile/:email" element={<ViewSingleProfile/>}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
             <Route path='/profile-update' element={<UpdateProfile/>}></Route>
+            <Route path="/message" element={<Message />}></Route>
             <Route path="/reset_password/:id/:token" element={<ResetPassword />}></Route>
             <Route path="/verify" element={<OTPInput />}></Route>
             {PrivateRoutes2()}
