@@ -74,7 +74,7 @@ function ViewSingleItem() {
                 <h1>Description: {item.itemDescription}</h1>
                 <h1>${item.itemPrice}</h1>
                 <h1>Quantity: {item.itemQuantity}</h1>
-                <h1>seller: {item.sellerEmail}</h1>
+                <h1><Link to={`/profile/${item.sellerEmail}`}>seller: {item.sellerEmail}</Link></h1>
                 {
                     checkDelete() ? (
                         <form method="DELETE" onSubmit={deleteRequest}>

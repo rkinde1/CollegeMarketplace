@@ -21,6 +21,7 @@ import MyRequests from './myRequests';
 import MyItems from './myItems';
 import Message from './message';
 import CreateComment from './createComment';
+import ViewSingleProfile from './ViewSingleProfile';
 
 function App() {
   const PrivateRoutes = () => {
@@ -58,7 +59,7 @@ function App() {
         <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
         <Route path="/myRequests" element={<MyRequests />}></Route>
         <Route path="/myItems" element={<MyItems />}></Route>
-        <Route path="/createComment" element={<CreateComment />}></Route>
+        <Route path="/createComment/:userFor" element={<CreateComment />}></Route>
       </Route>
       )
     } else {
@@ -77,6 +78,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Routes>
+            <Route path="/profile/:email" element={<ViewSingleProfile/>}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
             <Route path="/login" element={<Login />}></Route>

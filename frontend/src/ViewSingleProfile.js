@@ -1,46 +1,30 @@
 import React, {useEffect, useState} from "react"
-import {Link} from "react-router-dom"
-import Popup from "reactjs-popup";
-import { Button } from 'react-bootstrap';
-import UpdateProfile from "./UpdateProfile"
-import MyItems from "./myRequests"
+import {Link, useParams} from "react-router-dom"
+import axios from 'axios'
 import "./comment.css";
 
 
-
 function Profile () {
-    const email = localStorage.getItem('email');
+    const {email} = useParams()
     const [comments, setComments] = useState([]);
     const [person, setPerson] = useState([]);
     const forUser = email;
 
-
-    //authorization token
-    const token = localStorage.getItem("token");   
     useEffect(() => {
-        fetch('/api/profile/profile',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({email}),
+        axios.post(`/api/profile/${email}`)
+        .then(res => {
+            console.log("Set person");
+          setPerson(res.data);
         })
-        .then((res)=>{
-            if(res.status===200){
-                console.log('success');
-                return res.json();
-            }else{
-                console.log("failed");
-            }
-        })
-        .then((data) => {
-            // alert(JSON.stringify(data));
-            setPerson(data);
-        });
-    }, [email]);
-    
+        .catch(err => console.log(err))
+    })
 
-        const handleComments = async (e) => {
+
+    
+    //authorization token
+    const token = localStorage.getItem("token");       
+
+    const handleComments = async (e) => {
         await fetch('/api/comments/view', {
             method: 'POST',
             headers: {
@@ -84,11 +68,9 @@ function Profile () {
             <div>
                 <h1>{person.bio}</h1>
             </div>
-            <Link to= '/profile-update' className='btn btn-primary'>Update Profile</Link>
             <div>
-                <button onClick={handleComments} method="POST">View Comments</button>
+                <button onClick={handleComments}method="POST">View Comments</button>
                 <div className="comment-list">
-                
                 {comments.map((comment) => (
                     <div className="comment" key={comment._id}>
                         <h2>Rating: {comment.rating}</h2>

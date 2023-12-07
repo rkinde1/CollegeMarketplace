@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 function MyItems() {
     const [items, setItems] = useState([]);
+    const finished = false;
     const getItems = async (e) => {
         await fetch('/api/transaction/get/seller', {
             method: 'POST',
@@ -29,6 +30,7 @@ function MyItems() {
 
     const status = (item) => {
         if (item.status === true) {
+            finished = true;
             return 'Completed';
         }
         else if (item.sellerApproved === true || item.buyerApproved === true) {
@@ -128,6 +130,15 @@ function MyItems() {
                                 <button type="submit" style={{backgroundColor: 'green'}}>Approve</button>
                             </form>
                         )
+                    }
+
+                    { finished === true ?
+                        (
+                            <Link to={`/createComment/${item.buyer}`}> <button type= "submit">Write Review</button></Link>
+                        ):(
+                            null
+                        )
+                    
                     }
                     <form>
                         <Link to={`/item/${item.itemId}`}>
