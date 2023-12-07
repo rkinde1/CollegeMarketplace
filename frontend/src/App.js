@@ -30,10 +30,9 @@ function App() {
           <NavLink href="/market">Marketplace</NavLink>
           <NavLink href="/profile">Profile</NavLink>
           <NavLink href="/message">Message</NavLink>
-          <NavLink href="/progress">Progress</NavLink>
-          <NavLink href="/ChatBox2">ChatBox</NavLink>
           <NavLink href="/myRequests">My Requests</NavLink>
           <NavLink href="/myItems">My Items</NavLink>
+          <ChatBox2/>
           <Logout/>
         </Nav>
       )
@@ -57,8 +56,6 @@ function App() {
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/message" element={<Message />}></Route>
         <Route path="/item/:id" element={<ViewSingleItem/>}></Route>
-        <Route path="/progress" element={<Progress />}></Route> 
-        <Route path="/ChatBox2" element={<ChatBox2 />}></Route>
         <Route path="/myRequests" element={<MyRequests />}></Route>
         <Route path="/myItems" element={<MyItems />}></Route>
         <Route path="/createComment" element={<CreateComment />}></Route>
