@@ -1,10 +1,33 @@
-import React, { useEffect } from 'react';
-import { useState } from "react";
+import React, { useState } from "react";
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Typography from '@mui/material/StepLabel';
+import basicButton from './basicButton';
+import Box from '@mui/material/Box';
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import './item.css';
 
+const steps = ['In progress','Pending', 'Completed']/*array/list of all steps*/
+const stepDescription = ['Waiting for all users to accept transaction','Waiting for other user to accept transaction', 'All users have accepted']
+
+
 function MyRequests() {
+    const[activeStep, setActiveStep] = useState(0);/*stepper can communicate with usestate */
+    
+    const[completed,setCompleted]= useState({});/**Updated everytime next button is selected, and marks step as completed*/
+    
+    const totalSteps = steps.length;
+    
+    const completedSteps = Object.keys(completed).length;//since completed is an object, we return the length of the object completed
+    
+    const allStepsCompleted = completedSteps === totalSteps;
+
+    
+
     const [items, setItems] = useState([]);
+
     const getItems = async (e) => {
         await fetch('/api/transaction/get/buyer', {
             method: 'POST',
@@ -82,14 +105,149 @@ function MyRequests() {
     }
 
     const status = (item) => {
-        if (item.status === true) {
-            return 'Completed';
+        if (item.status === true) {//completed transaction
+            return <Box sx={{width:'100%'}}> {/*width of stepper bar */}
+            <Stepper activeStep={2}>
+                {steps.map((step, index)=>(
+                    <Step 
+                        key={step}
+                        completed= {completed[index]}
+                    >
+                        <StepLabel>{step}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+            <div> 
+                {allStepsCompleted ?(
+                    <>
+                    <Typography
+                        sx={{mt: 2, mb:1}}
+                    >All Steps Completed
+                    </Typography>
+                    <Box
+                        sx={{display:'flex', flexDirection:'row', pt:2}}
+                    >
+                        <Box sx={{flex:'1 1 auto'}}/>
+                    
+                        
+                        </Box>
+                    </>
+                ):  
+                (
+                    <>
+                        <Typography
+                            sx= {{mt:2, mb:1}}
+                        >
+                            {stepDescription[2]}{/*step description*/}
+                        </Typography>
+                        <Box
+                            sx={{display: 'flex', flexDirection:'row', pt:2}}
+                        >
+                        
+                        <Box sx={{flex: '1 1 auto'}}/>
+                        
+                         
+                        </Box>
+                    </>
+                )}       
+            </div>
+        </Box>;;
         }
-        else if (item.sellerApproved === true || item.buyerApproved === true) {
-            return 'In Progress';
+        else if (item.sellerApproved === true || item.buyerApproved === true) {//in progress, either user accepted
+            return <Box sx={{width:'100%'}}> {/*width of stepper bar */}
+            <Stepper activeStep={1}>
+                {steps.map((step, index)=>(
+                    <Step 
+                        key={step}
+                        completed= {completed[index]}
+                    >
+                        <StepLabel>{step}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+            <div> 
+                {allStepsCompleted ?(
+                    <>
+                    <Typography
+                        sx={{mt: 2, mb:1}}
+                    >All Steps Completed
+                    </Typography>
+                    <Box
+                        sx={{display:'flex', flexDirection:'row', pt:2}}
+                    >
+                        <Box sx={{flex:'1 1 auto'}}/>
+                    
+                        
+                        </Box>
+                    </>
+                ):  
+                (
+                    <>
+                        <Typography
+                            sx= {{mt:2, mb:1}}
+                        >
+                            {stepDescription[1]}{/*step description*/}
+                        </Typography>
+                        <Box
+                            sx={{display: 'flex', flexDirection:'row', pt:2}}
+                        >
+                        
+                        <Box sx={{flex: '1 1 auto'}}/>
+                        
+                         
+                        </Box>
+                    </>
+                )}       
+            </div>
+        </Box>;
         }
-        else {
-            return 'Pending';
+        else {//pending
+            return <Box sx={{width:'100%'}}> {/*width of stepper bar */}
+            <Stepper activeStep={0}>
+                {steps.map((step, index)=>(
+                    <Step 
+                        key={step}
+                        completed= {completed[index]}
+                    >
+                        <StepLabel>{step}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+            <div> 
+                {allStepsCompleted ?(
+                    <>
+                    <Typography
+                        sx={{mt: 2, mb:1}}
+                    >All Steps Completed
+                    </Typography>
+                    <Box
+                        sx={{display:'flex', flexDirection:'row', pt:2}}
+                    >
+                        <Box sx={{flex:'1 1 auto'}}/>
+                    
+                        
+                        </Box>
+                    </>
+                ):  
+                (
+                    <>
+                        <Typography
+                            sx= {{mt:2, mb:1}}
+                        >
+                            {stepDescription[0]}{/*step description */}
+                        </Typography>
+                        <Box
+                            sx={{display: 'flex', flexDirection:'row', pt:2}}
+                        >
+                        
+                        <Box sx={{flex: '1 1 auto'}}/>
+                        
+                         
+                        </Box>
+                    </>
+                )}       
+            </div>
+        </Box>;;
         }
     }
 
@@ -134,6 +292,10 @@ function MyRequests() {
     return (
         <div>
             <h1>My Requests</h1>
+            <br></br>
+        
+                    {/**end of progress bar component */}
+            
             {items.map((item) => (
                 <div className="item" key={item._id}>
                     <h1>{item.date.substring(0,10)}</h1>
@@ -151,8 +313,9 @@ function MyRequests() {
                                 <button type="submit">Cancel</button>
                             </form>
                         ) : (
-                            <form onSubmit={changeBuyerApproved(item._id)}>
-                                <button type="submit" style={{backgroundColor: 'green'}}>Approve</button>
+                            <form onSubmit={changeBuyerApproved(item._id)} >
+                                <button type="submit" style={{backgroundColor: 'green'}} >Accept</button>
+                                
                             </form>
                         )
                     }
@@ -177,6 +340,8 @@ function MyRequests() {
                 </div>   
                 ))}
         </div>
+        
+        
     );
 }
 
