@@ -44,6 +44,7 @@ function App() {
           <NavLink href="/signup">Register</NavLink>
           <NavLink href="/login">Login</NavLink>
           <NavLink href="/forgot-password">Forgot Password?</NavLink>
+          <NavLink href="/verify">Verify</NavLink>
         </Nav>
       )
     }
