@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import io from 'socket.io-client';
 import Chat from "./chat";
 import './message.css';
@@ -10,6 +9,7 @@ const Message = () => {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
+  const [roomList, setRoomList] = useState([]);
 
   const joinRoom = () => {
     if (username !== "" && room !== "") {
@@ -18,6 +18,27 @@ const Message = () => {
       setShowChat(true);
     }
   };
+
+  useEffect(() => {
+    // Request the list of existing rooms when the component mounts
+    socket.emit("get_rooms");
+
+    // Listen for the response from the server with the existing rooms
+    socket.on("rooms_list", (rooms) => {
+      setRoomList(rooms);
+    });
+
+    // Listen for the "room_joined" event when a user joins a new room
+    socket.on("room_joined", (joinedRoom) => {
+      setRoomList((prevRoomList) => [...prevRoomList, joinedRoom]);
+    });
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      socket.off("rooms_list");
+      socket.off("room_joined");
+    };
+  }, []);
 
   return (
     <div>
@@ -39,12 +60,24 @@ const Message = () => {
             }}
           />
           <button onClick={joinRoom}>Message Seller</button>
+
+          {/* Drop-down menu */}
+          <div>
+            <label>Select a Room:</label>
+            <select onChange={(event) => setRoom(event.target.value)}>
+              {roomList.map((roomItem) => (
+                <option key={roomItem} value={roomItem}>
+                  {roomItem}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       ) : (
         <Chat socket={socket} username={username} room={room} />
       )}
     </div>
   );
-}
+};
 
 export default Message;

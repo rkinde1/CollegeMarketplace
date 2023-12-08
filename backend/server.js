@@ -37,18 +37,26 @@ const io = new Server(server, {
 
 // Store chat history in a variable
 const chatHistory = {};
+const chatRooms = new Set();
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
+  // Emit the list of existing rooms to the newly connected user
+  socket.emit("rooms_list", Array.from(chatRooms));
+
   socket.on("join_room", (room) => {
     socket.join(room);
+    chatRooms.add(room);
     console.log(`User with ID: ${socket.id} Joined room: ${room}`);
 
     // Send chat history to the user who just joined
     if (chatHistory[room]) {
       socket.emit("chat_history", chatHistory[room]);
     }
+
+    // Broadcast the updated list of rooms to all connected users
+    io.emit("rooms_list", Array.from(chatRooms));
   });
 
   socket.on("send_message", (data) => {
