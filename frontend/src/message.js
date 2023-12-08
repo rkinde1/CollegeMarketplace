@@ -10,9 +10,19 @@ const Message = () => {
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   const [roomList, setRoomList] = useState([]);
+  const [person, setPerson] = useState({
+    // Assuming you have a 'person' object with user information
+    firstName: "DefaultFirstName",
+    // Add other properties as needed
+  });
 
   const joinRoom = () => {
-    if (username !== "" && room !== "") {
+    if (room !== "") {
+      if (username === "") {
+        // Set the username to the first name from person.firstName
+        setUsername(person.firstName);
+      }
+
       // Emit join_room event and request chat history
       socket.emit("join_room", room);
       setShowChat(true);
@@ -45,13 +55,15 @@ const Message = () => {
       {!showChat ? (
         <div className="joinChatContainer">
           <h3>Join A Chat</h3>
-          <input
-            type="text"
-            placeholder="name here"
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          />
+          {username === "" && (
+            <input
+              type="text"
+              placeholder="name here"
+              onChange={(event) => {
+                setUsername(event.target.value);
+              }}
+            />
+          )}
           <input
             type="text"
             placeholder="item ID here"
