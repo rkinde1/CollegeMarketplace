@@ -10,11 +10,9 @@ const Message = () => {
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   const [roomList, setRoomList] = useState([]);
-  const [person, setPerson] = useState({
-    // Assuming you have a 'person' object with user information
-    firstName: "DefaultFirstName",
-    // Add other properties as needed
-  });
+  const [person, setPerson] = useState([]);
+  const email = localStorage.getItem('email');
+  const forUser = email;
 
   const joinRoom = () => {
     if (room !== "") {
@@ -49,6 +47,29 @@ const Message = () => {
       socket.off("room_joined");
     };
   }, []);
+
+  const token = localStorage.getItem("token");   
+  useEffect(() => {
+      fetch('/api/profile/profile',{
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({email}),
+      })
+      .then((res)=>{
+          if(res.status===200){
+              console.log('success');
+              return res.json();
+          }else{
+              console.log("failed");
+          }
+      })
+      .then((data) => {
+          // alert(JSON.stringify(data));
+          setPerson(data);
+      });
+  }, [email]);
 
   return (
     <div>
