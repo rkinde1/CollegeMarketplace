@@ -12,7 +12,6 @@ const Message = () => {
   const [roomList, setRoomList] = useState([]);
   const [person, setPerson] = useState([]);
   const email = localStorage.getItem('email');
-  const forUser = email;
 
   const joinRoom = () => {
     if (room !== "") {
@@ -34,6 +33,11 @@ const Message = () => {
     // Listen for the response from the server with the existing rooms
     socket.on("rooms_list", (rooms) => {
       setRoomList(rooms);
+
+      // Set the initial value of room to the first item in the array
+      if (rooms.length > 0) {
+        setRoom(rooms[0]);
+      }
     });
 
     // Listen for the "room_joined" event when a user joins a new room
@@ -48,26 +52,23 @@ const Message = () => {
     };
   }, []);
 
-  const token = localStorage.getItem("token");   
   useEffect(() => {
-      fetch('/api/profile/profile',{
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({email}),
-      })
-      .then((res)=>{
-          if(res.status===200){
-              console.log('success');
-              return res.json();
-          }else{
-              console.log("failed");
-          }
+    fetch('/api/profile/profile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          console.log("failed");
+        }
       })
       .then((data) => {
-          // alert(JSON.stringify(data));
-          setPerson(data);
+        setPerson(data);
       });
   }, [email]);
 
@@ -75,7 +76,7 @@ const Message = () => {
     <div>
       {!showChat ? (
         <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
+          <h3>Join a chat</h3>
           {username === "" && (
             <input
               type="text"
