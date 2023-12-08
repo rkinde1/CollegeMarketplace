@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const connection = require('./dbconnection');
-const {Server} = require("socket.io");
+const { Server } = require("socket.io");
 const http = require("http");
 
 connection();
@@ -21,37 +21,51 @@ app.use('/api/reset', require('./routes/reset-password'));
 app.use('/api/forgot-password', require('./routes/forgot-password'));
 app.use('/api/transaction', require('./routes/transactionRoute'));
 
-app.listen(PORT, ()=> {
-    console.log(`Server running on port ${PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 app.use(cors());
 const server = http.createServer(app);
 
-const io =new Server(server, {
+const io = new Server(server, {
   cors: {
-    origin:"http://localhost:3000",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
-} );
+});
 
-io.on("connection", (socket) =>{
+// Store chat history in a variable
+const chatHistory = {};
+
+io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
-    socket.join(data)
-    console.log(`User with ID: ${socket.id} Joined room: ${data}`);
+  socket.on("join_room", (room) => {
+    socket.join(room);
+    console.log(`User with ID: ${socket.id} Joined room: ${room}`);
+
+    // Send chat history to the user who just joined
+    if (chatHistory[room]) {
+      socket.emit("chat_history", chatHistory[room]);
+    }
   });
 
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("recieve_message", data);
+
+    // Save the message to chat history
+    if (!chatHistory[data.room]) {
+      chatHistory[data.room] = [];
+    }
+    chatHistory[data.room].push(data);
   });
 
-  socket.on("disconnect", () =>{
-    console.log("User Disconnected")
+  socket.on("disconnect", () => {
+    console.log("User Disconnected");
   });
 });
 
-server.listen(3001, () =>{
-  console.log("Server Running now")
+server.listen(3001, () => {
+  console.log("Server Running now");
 });
