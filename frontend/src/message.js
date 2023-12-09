@@ -37,6 +37,8 @@ const Message = () => {
 
     // Listen for the response with the rooms list
     socket.on("rooms_list", (rooms) => {
+      // Add an empty option at the beginning
+      rooms.unshift("");
       setRoomList(rooms);
     });
 
@@ -45,26 +47,10 @@ const Message = () => {
       setRoomList((prevRoomList) => [...prevRoomList, createdRoom]);
     });
 
-    // Listen for the chat_history event and update chat history
-    socket.on("chat_history", (chatHistory) => {
-      // Update your chat history state in the Chat component
-      // For example, you might have a function to update chat history in the Chat component
-      // updateChatHistory(chatHistory);
-    });
-
-    // Listen for new messages and update chat history
-    socket.on("new_message", (message) => {
-      // Update your chat history state in the Chat component
-      // For example, you might have a function to update chat history with the new message
-      // updateChatHistory([message, ...chatHistory]);
-    });
-
     // Cleanup event listeners on component unmount
     return () => {
       socket.off("rooms_list");
       socket.off("room_created");
-      socket.off("chat_history");
-      socket.off("new_message");
     };
   }, []);
 

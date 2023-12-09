@@ -85,7 +85,7 @@ function ViewSingleItem() {
           <button style={{ float: "right", background: "green" }}>Initiate Transaction</button>
         </form>
         <form>
-          <button onClick={redirectToMessage} style={{ float: "left", background: "blue" }}>Message</button>
+          <button onClick={redirectToMessage} style={{ float: "left", background: "blue" }}>Message Seller</button>
         </form>
       </div>
     </div>
