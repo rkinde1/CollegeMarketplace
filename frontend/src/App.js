@@ -32,7 +32,7 @@ function App() {
           <NavLink href="/profile">Profile</NavLink>
           <NavLink href="/message">Message</NavLink>
           <NavLink href="/myRequests">My Requests</NavLink>
-          <NavLink href="/myItems">My Items</NavLink>
+          <NavLink href="/myItems">My Item Requests</NavLink>
           <ChatBox2/>
           <Logout/>
         </Nav>

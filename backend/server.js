@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const connection = require('./dbconnection');
-const {Server} = require("socket.io");
-const http = require("http");
+const { Server } = require('socket.io');
+const http = require('http');
 
 connection();
 const PORT = 5000;
@@ -21,37 +21,70 @@ app.use('/api/reset', require('./routes/reset-password'));
 app.use('/api/forgot-password', require('./routes/forgot-password'));
 app.use('/api/transaction', require('./routes/transactionRoute'));
 
-app.listen(PORT, ()=> {
-    console.log(`Server running on port ${PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
-app.use(cors());
 const server = http.createServer(app);
 
-const io =new Server(server, {
+const io = new Server(server, {
   cors: {
-    origin:"http://localhost:3000",
-    methods: ["GET", "POST"],
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
   },
-} );
+});
 
-io.on("connection", (socket) =>{
+// Store chat history in a variable
+const chatHistory = {};
+const chatRooms = new Set();
+
+io.on('connection', (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
-    socket.join(data)
-    console.log(`User with ID: ${socket.id} Joined room: ${data}`);
+  // Emit the list of existing rooms to the newly connected user
+  socket.emit('rooms_list', Array.from(chatRooms));
+
+  socket.on('join_specific_room', ({ room, username }) => {
+    // Join the room
+    socket.join(room);
+
+    // Emit chat_history event with the relevant chat history for the selected room
+    if (chatHistory[room]) {
+      io.to(socket.id).emit('chat_history', chatHistory[room]);
+    }
+
+    // Notify others in the room that a new user has joined
+    io.to(room).emit('room_joined', username);
+
+    // Broadcast the updated list of rooms to all connected users
+    io.emit('rooms_list', Array.from(chatRooms));
   });
 
-  socket.on("send_message", (data) => {
-    socket.to(data.room).emit("recieve_message", data);
+  socket.on('send_message', (data) => {
+    socket.to(data.room).emit('recieve_message', data);
+
+    // Save the message to chat history
+    if (!chatHistory[data.room]) {
+      chatHistory[data.room] = [];
+    }
+    chatHistory[data.room].push(data);
   });
 
-  socket.on("disconnect", () =>{
-    console.log("User Disconnected")
+  socket.on('create_room', (newRoom) => {
+    chatRooms.add(newRoom);
+    
+    // Emit the "room_created" event to inform clients about the new room
+    io.emit('room_created', newRoom);
+
+    // Broadcast the updated list of rooms to all connected users
+    io.emit('rooms_list', Array.from(chatRooms));
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User Disconnected');
   });
 });
 
-server.listen(3001, () =>{
-  console.log("Server Running now")
+server.listen(3001, () => {
+  console.log('Server Running now');
 });
