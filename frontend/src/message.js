@@ -16,12 +16,11 @@ const Message = () => {
   const joinRoom = () => {
     if (room !== "") {
       if (username === "") {
-        // Set the username to the first name from person.firstName
         setUsername(person.firstName);
       }
 
-      // Emit join_room event and request chat history
-      socket.emit("join_room", room);
+      // Emit join_specific_room event and request chat history for the selected room
+      socket.emit("join_specific_room", { room, username });
       setShowChat(true);
     }
   };
@@ -45,10 +44,18 @@ const Message = () => {
       setRoomList((prevRoomList) => [...prevRoomList, joinedRoom]);
     });
 
+    // Listen for the chat_history event and update chat history
+    socket.on("chat_history", (chatHistory) => {
+      // Update your chat history state in the Chat component
+      // For example, you might have a function to update chat history in the Chat component
+      // updateChatHistory(chatHistory);
+    });
+
     // Cleanup event listeners on component unmount
     return () => {
       socket.off("rooms_list");
       socket.off("room_joined");
+      socket.off("chat_history");
     };
   }, []);
 

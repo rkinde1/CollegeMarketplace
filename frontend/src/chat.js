@@ -25,23 +25,29 @@ function Chat({ socket, username, room }) {
       setMessageList((list) => [...list, data]);
     };
 
-    // Listen for incoming messages and chat history
+    // Listen for incoming messages
     socket.on("recieve_message", receiveMessageHandler);
-    socket.on("chat_history", (history) => {
-      setMessageList(history);
-    });
 
-    // Cleanup function to remove the event listeners when the component unmounts
+    // Cleanup function to remove the event listener when the component unmounts
     return () => {
       socket.removeListener("recieve_message", receiveMessageHandler);
-      socket.removeAllListeners("chat_history");
     };
   }, [socket]);
 
   useEffect(() => {
     // Request chat history when joining the room
-    socket.emit("join_room", room);
-  }, [socket, room]);
+    socket.emit("join_specific_room", { room, username });
+
+    // Listen for chat history updates
+    socket.on("chat_history", (history) => {
+      setMessageList(history);
+    });
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      socket.removeAllListeners("chat_history");
+    };
+  }, [socket, room, username]);
 
   return (
     <div className="chat-window">
