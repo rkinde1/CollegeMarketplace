@@ -59,7 +59,7 @@ function ViewSingleItem() {
   };
 
   const redirectToMessage = () => {
-    navigate(`/message/${item.sellerEmail}/${item.itemName}`);
+    navigate(`/message`);
   };
 
   return (

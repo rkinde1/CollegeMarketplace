@@ -81,7 +81,7 @@ const Message = () => {
           <h3>Join or Create a chat</h3>
           <input
             type="text"
-            placeholder="Enter the item ID to join or create a chat"
+            placeholder="Enter the item Name"
             onChange={(event) => {
               setRoom(event.target.value);
             }}
