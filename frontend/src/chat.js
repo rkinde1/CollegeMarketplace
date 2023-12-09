@@ -49,6 +49,22 @@ function Chat({ socket, username, room }) {
     };
   }, [socket, room, username]);
 
+  // Listen for room changes and request chat history when the room changes
+  useEffect(() => {
+    const handleRoomChange = () => {
+      // Request chat history when the room changes
+      socket.emit("join_specific_room", { room, username });
+    };
+
+    // Listen for the room_change event
+    socket.on("room_change", handleRoomChange);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      socket.removeListener("room_change", handleRoomChange);
+    };
+  }, [socket, room, username]);
+
   return (
     <div className="chat-window">
       <div className="chat-header">

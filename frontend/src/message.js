@@ -1,26 +1,32 @@
 import React, { useState, useEffect } from "react";
-import io from 'socket.io-client';
+import io from "socket.io-client";
 import Chat from "./chat";
-import './message.css';
+import "./message.css";
 
 const socket = io.connect("http://localhost:3001");
 
 const Message = () => {
-  const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   const [roomList, setRoomList] = useState([]);
   const [person, setPerson] = useState([]);
-  const email = localStorage.getItem('email');
+  const email = localStorage.getItem("email");
 
-  const joinRoom = () => {
+  const joinRoom = async () => {
     if (room !== "") {
-      if (username === "") {
-        setUsername(person.firstName);
+      if (!person.firstName) {
+        console.warn("Username not available. Please update your profile.");
+        return;
       }
 
-      // Emit join_specific_room event and request chat history for the selected room
-      socket.emit("join_specific_room", { room, username });
+      if (!roomList.includes(room)) {
+        // Create the room if it doesn't exist
+        await socket.emit("create_room", room);
+        setRoomList((prevRoomList) => [...prevRoomList, room]);
+      }
+
+      // Emit join_specific_room event and request chat history
+      socket.emit("join_specific_room", { room, username: person.firstName });
       setShowChat(true);
     }
   };
@@ -29,19 +35,14 @@ const Message = () => {
     // Request the list of existing rooms when the component mounts
     socket.emit("get_rooms");
 
-    // Listen for the response from the server with the existing rooms
+    // Listen for the response with the rooms list
     socket.on("rooms_list", (rooms) => {
       setRoomList(rooms);
-
-      // Set the initial value of room to the first item in the array
-      if (rooms.length > 0) {
-        setRoom(rooms[0]);
-      }
     });
 
-    // Listen for the "room_joined" event when a user joins a new room
-    socket.on("room_joined", (joinedRoom) => {
-      setRoomList((prevRoomList) => [...prevRoomList, joinedRoom]);
+    // Listen for the "room_created" event when a new room is created
+    socket.on("room_created", (createdRoom) => {
+      setRoomList((prevRoomList) => [...prevRoomList, createdRoom]);
     });
 
     // Listen for the chat_history event and update chat history
@@ -51,19 +52,27 @@ const Message = () => {
       // updateChatHistory(chatHistory);
     });
 
+    // Listen for new messages and update chat history
+    socket.on("new_message", (message) => {
+      // Update your chat history state in the Chat component
+      // For example, you might have a function to update chat history with the new message
+      // updateChatHistory([message, ...chatHistory]);
+    });
+
     // Cleanup event listeners on component unmount
     return () => {
       socket.off("rooms_list");
-      socket.off("room_joined");
+      socket.off("room_created");
       socket.off("chat_history");
+      socket.off("new_message");
     };
   }, []);
 
   useEffect(() => {
-    fetch('/api/profile/profile', {
-      method: 'POST',
+    fetch("/api/profile/profile", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ email }),
     })
@@ -83,29 +92,23 @@ const Message = () => {
     <div>
       {!showChat ? (
         <div className="joinChatContainer">
-          <h3>Join a chat</h3>
-          {username === "" && (
-            <input
-              type="text"
-              placeholder="name here"
-              onChange={(event) => {
-                setUsername(event.target.value);
-              }}
-            />
-          )}
+          <h3>Join or Create a chat</h3>
           <input
             type="text"
-            placeholder="item ID here"
+            placeholder="Enter the item ID to join or create a chat"
             onChange={(event) => {
               setRoom(event.target.value);
             }}
           />
-          <button onClick={joinRoom}>Message Seller</button>
+          <button onClick={joinRoom}>Join/Create Room</button>
 
           {/* Drop-down menu */}
           <div>
             <label>Select a Room:</label>
-            <select onChange={(event) => setRoom(event.target.value)}>
+            <select
+              value={room}
+              onChange={(event) => setRoom(event.target.value)}
+            >
               {roomList.map((roomItem) => (
                 <option key={roomItem} value={roomItem}>
                   {roomItem}
@@ -115,7 +118,7 @@ const Message = () => {
           </div>
         </div>
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <Chat socket={socket} username={person.firstName} room={room} />
       )}
     </div>
   );

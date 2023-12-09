@@ -70,6 +70,16 @@ io.on('connection', (socket) => {
     chatHistory[data.room].push(data);
   });
 
+  socket.on('create_room', (newRoom) => {
+    chatRooms.add(newRoom);
+    
+    // Emit the "room_created" event to inform clients about the new room
+    io.emit('room_created', newRoom);
+
+    // Broadcast the updated list of rooms to all connected users
+    io.emit('rooms_list', Array.from(chatRooms));
+  });
+
   socket.on('disconnect', () => {
     console.log('User Disconnected');
   });
