@@ -95,13 +95,11 @@ const Message = () => {
               value={room}
               onChange={(event) => setRoom(event.target.value)}
             >
-              {roomList
-                .filter((roomItem) => roomItem !== "" && roomList.includes(roomItem))
-                .map((filteredRoom) => (
-                  <option key={filteredRoom} value={filteredRoom}>
-                    {filteredRoom}
-                  </option>
-                ))}
+              {roomList.map((roomItem) => (
+                <option key={roomItem} value={roomItem}>
+                  {roomItem}
+                </option>
+              ))}
             </select>
           </div>
         </div>
