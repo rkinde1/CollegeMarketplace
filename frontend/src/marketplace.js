@@ -71,11 +71,11 @@ function Marketplace () {
             {searchResults.map((item) => (
                 <div className="item" key={item._id}>
                     <img src={item.itemImage} style={{height: '200px',}}/>
-                    <h2>{item.itemName}</h2>
-                    <p>{item.itemDescription}</p>
-                    <p>${item.itemPrice}</p>
-                    <p>{item.itemCategory}</p>
-                    <p>{item.itemQuantity}</p>
+                    <h2>Item: {item.itemName}</h2>
+                    <p>Description: {item.itemDescription}</p>
+                    <p>Price: ${item.itemPrice}</p>
+                    <p>Category: {item.itemCategory}</p>
+                    <p>Quantity: {item.itemQuantity}</p>
                     <p className="userFont">{item.sellerEmail}</p>
                     <form>
                         <Link to={`/item/${item._id}`}>

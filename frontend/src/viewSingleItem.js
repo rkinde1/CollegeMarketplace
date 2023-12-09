@@ -48,6 +48,7 @@ function ViewSingleItem() {
       .then((res) => {
         if (res.status === 200) {
           alert('Success');
+          navigate('/myRequests')
         } else {
           alert(res.status);
         }
