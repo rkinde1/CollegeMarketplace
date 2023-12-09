@@ -11,6 +11,18 @@ function CreateItem () {
 
     const handleCreateItem = (e) => {
         e.preventDefault();
+        if (!sentItemImage) {
+            alert('Please upload an image');
+            return;
+        }
+        if (sentItemImage.length > 100000) {
+            alert('Image size is too large. Please try again with a smaller image.');
+            return;
+        }
+        if (!itemName || !itemDescription || !itemPrice || !itemCategory || !itemQuantity) {
+            alert('Please fill in all fields');
+            return;
+        }
         fetch('/api/items/create', {
             method: 'POST',
             headers: {
@@ -27,7 +39,6 @@ function CreateItem () {
             } 
             else {
                 alert('Failed');
-                alert(res.status);
                 console.log('Failed');
             }
         })
@@ -56,8 +67,6 @@ function CreateItem () {
                 <input type="text" placeholder="Description" id="description" onChange={(e) => setItemDescription(e.target.value)} value={itemDescription}/>
                 <input type="number" placeholder="Price" id="price" onChange={(e) => setItemPrice(e.target.value)} value={itemPrice}/>
                 <input  onChange={handleImage} type="file" id="formupload" name="image" className="form-control" />
-
-                {/*Change to radio buttons*/}
                 <input type="text" placeholder="Category" id="category" onChange={(e) => setItemCategory(e.target.value)} value={itemCategory}/>
                 <input type="number" placeholder="Quantity" id="quantity" onChange={(e) => setItemQuantity(e.target.value)} value={itemQuantity}/>
                 <button type="submit">Submit</button>
